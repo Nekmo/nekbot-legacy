@@ -1,0 +1,5 @@
+# Required by Telegram
+-e git+git@bitbucket.org:Nekmo/pytg2.git@877501ea9c10e747b93d779e0a6d3a2c105cd674#egg=pytg-master
+future==0.14.3
+# Required by plugins.
+requests==2.6.0
