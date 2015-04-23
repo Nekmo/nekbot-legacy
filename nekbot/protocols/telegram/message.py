@@ -11,4 +11,4 @@ class MessageTelegram(Message):
         self.msg = msg
 
     def reply(self, body):
-        self.protocol.tg.msg(self.msg.reply.cmd, body)
+        self.protocol.tg.msg(self.msg.reply.cmd, body.decode('utf-8'))

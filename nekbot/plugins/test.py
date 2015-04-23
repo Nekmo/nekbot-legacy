@@ -9,5 +9,5 @@ def argnumber(msg, number):
     msg.reply('Entregado: %i' % number)
 
 @command
-def argnumber(msg, *args):
+def args(msg, *args):
     msg.reply('Entregado: %s' % ', '.join(args))
