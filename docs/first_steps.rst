@@ -30,3 +30,48 @@ decorador::
     def my_command(message):
         pass
 
+
+Argumentos posicionales
+=======================
+NekBot permite añadir argumentos de una forma fácil a tus comandos. ¡Y es tan fácil como usar los propios argumentos
+de tus funciones!
+
+Argumentos posicionales
+
+Por ejemplo, el siguiente comando exigirá un argumento (obligatorio)::
+
+    @command
+    def greet(message, person):
+        return '¡Hola %s!' % person
+
+Lo cual se ejecutará con::
+
+    !greet Pepe
+
+Por supuesto, también podemos usar `*args`::
+
+    @command
+    def greet(message, *args):
+        return '¡Hola %s!' % ', '.join(args)
+
+Lo cual se usará con::
+
+    !greet Pepe "José Pérez" Fernando
+
+Validación
+==========
+Por supuesto, de nada sirve obtener valores, si estos no nos sirve. NekBot tiene un sistema que se encarga de
+comprobar la validez de dichos datos, transformarlos, y mostrar un error en caso de no ser correctos. Por ejemplo, la
+ siguiente función solo funcionará si los valores son números::
+
+    from random import randint
+
+    @command('random', int, int)
+    def random(message, start, end):
+        return randint(start, end)
+
+En caso de no devolverse un valor correcto, obtendremos algo como lo siguiente::
+
+    In: !random 3 spam
+    Out:El argumento en la posición 2 con valor "spam", no es válido. El valor debe ser un número.
+

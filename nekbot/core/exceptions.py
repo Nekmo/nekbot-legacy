@@ -46,7 +46,7 @@ class InvalidArgument(PrintableException):
             body = self.several_arguments()
         else:
             body = self.one_argument()
-        return '%s %s.' % (body, self.msg)
+        return '%s %s' % (body, self.msg)
 
 
     def __repr__(self):
