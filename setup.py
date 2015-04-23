@@ -26,7 +26,8 @@ except IOError:
     long_description = ''
 
 requirements = parse_requirements('requirements.txt', session=uuid.uuid1())
-install_requires = [str(ir.req) for ir in requirements]
+install_requires = [str(ir.req) for ir in requirements if not ir.url]
+
 # dependency_links = []
 # for i, dependency in enumerate(install_requires):
 #     if not re.findall('(hg|git|svn|bzr)\+', dependency): continue
@@ -172,7 +173,7 @@ setup(
     provides=MODULES,
     install_requires=install_requires,
     dependency_links=[
-        'https://bitbucket.org/Nekmo/pytg2/get/74f08a3bda11.zip#egg=pytg-master',
+        'https://bitbucket.org/Nekmo/pytg2/get/74f08a3bda11.zip#egg=pytg',
     ],
 
     packages=MODULES,
