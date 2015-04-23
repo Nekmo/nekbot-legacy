@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import re
 
 PROJECT = 'nekbot'
 VERSION = '0.1'
@@ -24,8 +25,14 @@ try:
 except IOError:
     long_description = ''
 
-install_reqs = parse_requirements('requirements.txt', session=uuid.uuid1())
-reqs = [str(ir.req) for ir in install_reqs]
+requirements = parse_requirements('requirements.txt', session=uuid.uuid1())
+install_requires = [str(ir.req) for ir in requirements]
+dependency_links = []
+for i, dependency in enumerate(install_requires):
+    if not re.findall('(hg|git|svn|bzr)\+', dependency): continue
+    install_requires[i] = dependency.split('#egg=')[1]
+    dependency_links.append(dependency.replace('-e ', ''))
+
 
 ##############################################################################
 # find_package_data is an Ian Bicking creation.
@@ -163,9 +170,9 @@ setup(
     platforms=['linux'],
 
     provides=MODULES,
-    install_requires=reqs,
+    install_requires=install_requires,
+    dependency_links=dependency_links,
 
-    # namespace_packages=['alsur'],
     packages=MODULES,
     include_package_data=True,
     # Scan the input for package information
