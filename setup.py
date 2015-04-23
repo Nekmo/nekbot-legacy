@@ -27,11 +27,11 @@ except IOError:
 
 requirements = parse_requirements('requirements.txt', session=uuid.uuid1())
 install_requires = [str(ir.req) for ir in requirements]
-dependency_links = []
-for i, dependency in enumerate(install_requires):
-    if not re.findall('(hg|git|svn|bzr)\+', dependency): continue
-    install_requires[i] = dependency.split('#egg=')[1]
-    dependency_links.append(dependency.replace('-e ', ''))
+# dependency_links = []
+# for i, dependency in enumerate(install_requires):
+#     if not re.findall('(hg|git|svn|bzr)\+', dependency): continue
+#     install_requires[i] = dependency.split('#egg=')[1]
+#     dependency_links.append(dependency.replace('-e ', ''))
 
 
 ##############################################################################
@@ -150,7 +150,7 @@ setup(
     classifiers=[
         'Natural Language :: Spanish',
         'Development Status :: 1 - Planning',
-        'License :: OSI Approved :: BSD License',
+        'License :: OSI Approved :: MIT License',
         'Intended Audience :: Developers',
         'Environment :: Console',
         'Topic :: Communications :: Chat',
@@ -171,7 +171,9 @@ setup(
 
     provides=MODULES,
     install_requires=install_requires,
-    dependency_links=dependency_links,
+    dependency_links=[
+        'https://bitbucket.org/Nekmo/pytg2/get/2f50143bfe95.zip#egg=pytg-master',
+    ],
 
     packages=MODULES,
     include_package_data=True,
