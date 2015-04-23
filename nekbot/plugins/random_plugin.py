@@ -24,8 +24,8 @@ def random(msg, *args):
     if not args:
         args = [1, 6]  # Mostraremos un número del 1 al 6
     elif len(args) <= 1 and not args[0].isdigit():
-        raise InvalidArgument('Para usar este comando con palabras, debe añadir al menos 2,'
-                              'y para números entre 2 rangos, los valores deben ser de tipo'
+        raise InvalidArgument('Para usar este comando con palabras, debe añadir al menos 2, '
+                              'y para números entre 2 rangos, los valores deben ser de tipo '
                               'numérico.', args[0])
     elif len(args) <= 1:
         args = (1, args[0])
