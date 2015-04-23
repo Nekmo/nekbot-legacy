@@ -170,20 +170,20 @@ setup(
 
     platforms=['linux'],
 
-    provides=MODULES,
+    provides=['nekbot'],
     install_requires=install_requires,
     dependency_links=[
         'https://bitbucket.org/Nekmo/pytg2/get/74f08a3bda11.zip#egg=pytg',
     ],
 
-    packages=MODULES,
+    packages=find_packages(os.path.abspath(os.path.dirname(__file__))),
     include_package_data=True,
     # Scan the input for package information
     # to grab any data files (text, images, etc.)
     # associated with sub-packages.
     package_data=package_data,
 
-    entry_points={},
+    # entry_points={},
 
     zip_safe=False,
 )

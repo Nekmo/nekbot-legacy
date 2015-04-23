@@ -5,6 +5,8 @@ syntax: glob
 *.pyc
 *~
 docs/_build
+build
+dist
 
 # switch to regexp syntax.
 syntax: regexp
