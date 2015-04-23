@@ -17,5 +17,5 @@ def veryrandom(msg, min=1, max=6, base=10, num=1):
             'col': 1, 'format': 'plain', 'rdn': 'new',
         }).text
     except Exception as e:
-        data = e
+        data = str(e)
     msg.reply(data.replace('\n', ' '))
