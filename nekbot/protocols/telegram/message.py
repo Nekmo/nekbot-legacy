@@ -11,4 +11,6 @@ class MessageTelegram(Message):
         self.msg = msg
 
     def reply(self, body):
+        if not isinstance(body, (str, unicode)):
+            body = str(body)
         self.protocol.tg.msg(self.msg.reply.cmd, body.decode('utf-8'))

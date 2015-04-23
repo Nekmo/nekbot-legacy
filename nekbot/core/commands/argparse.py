@@ -34,9 +34,9 @@ class ArgParse(object):
                 raise e
             # No tenemos tipo para él, pero sí por defecto
             if not ERRORS[err_class].get(type) and ERRORS[err_class].get(AllTypes):
-                raise InvalidArgument(type, value, ERRORS[err_class][AllTypes], pos)
+                raise InvalidArgument(ERRORS[err_class][AllTypes], value, pos)
             # ¡Hemos triunfado! Hay para excepción->tipo
-            raise InvalidArgument(type, value, ERRORS[err_class][type], pos)
+            raise InvalidArgument(ERRORS[err_class][type], value, pos)
         return value
 
     def parse(self, args):
