@@ -62,7 +62,7 @@ Validación
 ==========
 Por supuesto, de nada sirve obtener valores, si estos no nos sirve. NekBot tiene un sistema que se encarga de
 comprobar la validez de dichos datos, transformarlos, y mostrar un error en caso de no ser correctos. Por ejemplo, la
- siguiente función solo funcionará si los valores son números::
+siguiente función solo funcionará si los valores son números::
 
     from random import randint
 
