@@ -11,3 +11,8 @@ def argnumber(msg, number):
 @command
 def args(msg, *args):
     msg.reply('Entregado: %s' % ', '.join(args))
+
+@command
+def kwargnumber(msg, number=10):
+    assert type(number) is IntType
+    return 'Entregado: %i' % number

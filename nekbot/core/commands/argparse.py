@@ -17,9 +17,23 @@ ERRORS = {
 class ArgParse(object):
     def __init__(self):
         self.arg_types = []
+        self.kwarg_types = []
 
     def set_arg_types(self, arg_types):
         self.arg_types = arg_types
+
+    def set_from_function(self, function):
+        kwargs_types = inspect.getargspec(function).defaults
+        if kwargs_types:
+            self.kwarg_types = map(self.get_type, kwargs_types)
+
+    def get_type(self, value):
+        if hasattr(value, '__call__'):
+            return value
+        elif hasattr(value.__class__, '__call__'):
+            return value.__class__
+        else:
+            return str
 
     def parse_arg(self, type, value, pos=None):
         try:
@@ -40,8 +54,9 @@ class ArgParse(object):
         return value
 
     def parse(self, args):
+        all_types = tuple(self.arg_types) + tuple(self.kwarg_types)
         for i, arg in enumerate(args):
-            if len(self.arg_types) <= i: break
-            arg = self.parse_arg(self.arg_types[i], arg, i)
+            if len(all_types) <= i: break
+            arg = self.parse_arg(all_types[i], arg, i)
             args[i] = arg
         return args

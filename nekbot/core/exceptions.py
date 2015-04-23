@@ -25,8 +25,8 @@ class InvalidArgument(PrintableException):
         body = 'El argumento '
         if self.pos is not None:
             body += 'en la posición %s ' % (self.pos + 1)
-        body += 'con valor "%s", no es válido. ' % self.value
-        return body + self.msg
+        body += 'con valor "%s", no es válido.' % self.value
+        return body
 
     def several_arguments(self):
         positions = self.pos if self.pos else []

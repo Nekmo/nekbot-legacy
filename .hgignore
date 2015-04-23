@@ -4,6 +4,7 @@ syntax: glob
 *.elc
 *.pyc
 *~
+docs/_build
 
 # switch to regexp syntax.
 syntax: regexp
