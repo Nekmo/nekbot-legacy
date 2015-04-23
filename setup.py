@@ -172,7 +172,7 @@ setup(
     provides=MODULES,
     install_requires=install_requires,
     dependency_links=[
-        'https://bitbucket.org/Nekmo/pytg2/get/2f50143bfe95.zip#egg=pytg-master',
+        'https://bitbucket.org/Nekmo/pytg2/get/74f08a3bda11.zip#egg=pytg-master',
     ],
 
     packages=MODULES,
