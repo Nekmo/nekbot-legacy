@@ -1,5 +1,7 @@
 #!/usr/bin/env/python
 # coding=utf-8
+from pkgutil import extend_path
+__path__ = extend_path(__path__, __name__)
 
 __version__ = 'Mirai 0.1'
 __author__ = 'nekmo'

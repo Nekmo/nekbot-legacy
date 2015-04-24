@@ -7,6 +7,8 @@ from .base.user import User
 from .base.group_chat import GroupChat
 from .base import Protocol
 
+from pkgutil import extend_path
+__path__ = extend_path(__path__, __name__)
 
 __author__ = 'nekmo'
 
