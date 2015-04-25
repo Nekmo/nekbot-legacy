@@ -1,12 +1,34 @@
+# coding=utf-8
 __author__ = 'nekmo'
 
 class Message(object):
 
-    def __init__(self, protocol, body, user, group=None):
-        self.protocol, self.body, self.user, self.group = protocol, body, user, group
+    def __init__(self, protocol, body, user, groupchat=None):
+        """Un nuevo mensaje entrante
+        :param protocol: Instancia del protocol
+        :param body: String con el mensaje recibido.
+        :param user: Instancia de User del usuario que envía el mensaje.
+        :param groupchat: Instancia de GroupChat
+        """
+        self.protocol, self.body, self.user, self.groupchat = protocol, body, user, groupchat
 
     def reply(self, body):
-        pass
+        if self.is_groupchat and self.is_public:
+            self.groupchat.send_message(body)
+        else:
+            self.user.send_message(body)
+
+    @property
+    def is_groupchat(self):
+        raise NotImplementedError("This protocol doesn't know if the message is from a groupchat.")
+
+    @property
+    def is_public(self):
+        raise NotImplementedError("This protocol doesn't know if the message is public.")
+
+    @property
+    def is_private(self):
+        raise NotImplementedError("This protocol doesn't know if the message is private.")
 
     def __str__(self):
         return self.body
