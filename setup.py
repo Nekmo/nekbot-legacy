@@ -193,6 +193,9 @@ setup(
     # associated with sub-packages.
     package_data=package_data,
 
+    download_url='https://bitbucket.org/Nekmo/nekbot-mirai/get/default.tar.gz',
+    keywords=['nekbot', 'bot', 'irc', 'xmpp', 'chat', 'telegram', 'jabber'],
+
     # entry_points={},
 
     zip_safe=False,
