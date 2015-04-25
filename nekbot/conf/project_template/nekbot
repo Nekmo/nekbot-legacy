@@ -29,5 +29,11 @@ if __name__ == '__main__':
     parser.add_argument('-v', '--verbose', help='set logging to COMM',
                         action='store_const', dest='loglevel',
                         const=5, default=logging.INFO)
-    args = parser.parse_args()
-    NekBot()
+
+
+    logging.basicConfig(level=logging.DEBUG)
+    nekbot = NekBot().start()
+    try:
+        nekbot.loop()
+    except (KeyboardInterrupt, SystemExit):
+        nekbot.close()

@@ -25,8 +25,18 @@ try:
 except IOError:
     long_description = ''
 
+__dir__ = os.path.abspath(os.path.dirname(__file__))
+
 requirements = parse_requirements('requirements.txt', session=uuid.uuid1())
 install_requires = [str(ir.req) for ir in requirements if not ir.url]
+
+packages = find_packages(__dir__)
+# Prevent include symbolic links
+for package in tuple(packages):
+    path = os.path.join(__dir__, package.replace('.', '/'))
+    if not os.path.exists(path): continue
+    if not os.path.islink(path): continue
+    packages.remove(package)
 
 # dependency_links = []
 # for i, dependency in enumerate(install_requires):
@@ -176,7 +186,7 @@ setup(
         'https://bitbucket.org/Nekmo/pytg2/get/74f08a3bda11.zip#egg=pytg',
     ],
 
-    packages=find_packages(os.path.abspath(os.path.dirname(__file__))),
+    packages=packages,
     include_package_data=True,
     # Scan the input for package information
     # to grab any data files (text, images, etc.)
