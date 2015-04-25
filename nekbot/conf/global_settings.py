@@ -1,5 +1,6 @@
 PROTOCOLS = [
-    'telegram',
+    # 'telegram',
+    'irc',
 ]
 
 PLUGINS = [

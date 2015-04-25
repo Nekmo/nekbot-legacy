@@ -1,5 +1,6 @@
 # coding=utf-8
 __author__ = 'nekmo'
+
 from . import global_settings
 
 class Settings(object):
@@ -12,8 +13,9 @@ class Settings(object):
         """
         self.write_conf(module)
 
-    def write_conf(self, settings_mod):
+    def write_conf(self, settings_mod, prevent_override=False):
         for setting in dir(settings_mod):
+            if prevent_override and hasattr(self, setting): continue
             if setting.isupper():
                 setattr(self, setting, getattr(settings_mod, setting))
 

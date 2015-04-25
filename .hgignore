@@ -8,8 +8,10 @@ docs/_build
 build
 dist
 *.egg-info
+nekbot/protocols/irc/**
 
 # switch to regexp syntax.
 syntax: regexp
 .idea
 ^\.pc/
+.directory
