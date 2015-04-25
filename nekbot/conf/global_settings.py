@@ -6,7 +6,7 @@ PROTOCOLS = [
 PLUGINS = [
     'hello',
     'bot',
-    'random_plugin',
+    'random',
     'test',
 ]
 

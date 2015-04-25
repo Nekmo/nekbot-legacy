@@ -18,3 +18,4 @@ syntax: regexp
 .directory
 .pypirc
 nekbot/protocols/telegram
+nekbot/plugins/random

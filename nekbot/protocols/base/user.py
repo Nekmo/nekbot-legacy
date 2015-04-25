@@ -18,4 +18,5 @@ class User(object):
 
 class Users(dict):
     def __init__(self, protocol):
+        self.protocol = protocol
         dict.__init__(self)
