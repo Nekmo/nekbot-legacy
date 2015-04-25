@@ -182,9 +182,6 @@ setup(
 
     provides=['nekbot'],
     install_requires=install_requires,
-    dependency_links=[
-        'https://bitbucket.org/Nekmo/pytg2/get/74f08a3bda11.zip#egg=pytg',
-    ],
 
     packages=packages,
     include_package_data=True,
