@@ -1,17 +1,16 @@
 from collections import defaultdict
+from nekbot.protocols.base.user import Users
 
 __author__ = 'nekmo'
 
 class GroupChat(object):
 
     def __init__(self, protocol, name):
+        self.users = Users(protocol)
         self.protocol, self.name = protocol, name
 
     def send_message(self, body):
         raise NotImplementedError("This protocol can't send public messages.")
-
-    def send_message_to(self, body, to):
-        raise NotImplementedError("This protocol can't send private messages to users.")
 
     def __str__(self):
         return self.name

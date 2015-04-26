@@ -11,6 +11,9 @@ class Settings(object):
         """Módulo (archivo de configuración) donde se encuentran los parámetros con
         la configuración del usuario. Esta sobrescribirá la global
         """
+        if isinstance(module, (unicode, str)):
+            from nekbot.utils.modules import get_module
+            module = get_module(module)
         self.write_conf(module)
 
     def write_conf(self, settings_mod, prevent_override=False):
