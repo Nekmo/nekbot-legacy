@@ -10,12 +10,15 @@ class ProtocolError(Exception):
     def __str__(self):
         return self.msg
 
+
 class PrintableException(Exception):
+    base_msg = ''
     def __init__(self, msg):
         self.msg = msg
 
     def __str__(self):
-        return self.msg
+        return '%s: %s' % (self.base_msg, self.msg) if self.base_msg else self.msg
+
 
 class InvalidArgument(PrintableException):
     def __init__(self, msg, value, pos=None):
@@ -51,3 +54,7 @@ class InvalidArgument(PrintableException):
 
     def __repr__(self):
         return '<InvalidArgument "%s">' % str(self)
+
+
+class InsufficientPermissions(PrintableException):
+    base_msg = 'This action could not be completed due to lack of permissions'

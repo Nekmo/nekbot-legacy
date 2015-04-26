@@ -6,7 +6,7 @@ class User(object):
 
     def __init__(self, protocol, username, id=None, groupchat=None):
         self.protocol, self.username, self.groupchat = protocol, username, groupchat
-        if hasattr(self, id) and id is not None:
+        if hasattr(self, 'id') and id is not None:
             # id puede ser un método. No queremos entonces sobrescribirlo.
             self.id = id
 

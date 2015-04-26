@@ -1,7 +1,8 @@
 # coding=utf-8
 from types import IntType
 from nekbot.core.commands import command
-from nekbot.core.commands.temp import TempRegexList, TempRegex
+from nekbot.core.commands.control import Control
+from nekbot.core.commands.temp import TempRegex
 
 __author__ = 'nekmo'
 
@@ -33,3 +34,8 @@ def test_temp_regex(msg):
     temp = TempRegex(msg.protocol, '^(S|s|N|n)$', timeout=5)
     response = temp.read().next()
     msg.reply('Usted ha dicho: %s' % response.match[0])
+
+@command
+def need_root(msg):
+    return 'Hola jefe!'
+need_root.control = Control

@@ -41,6 +41,10 @@ class Command(object):
         except Exception as e:
             return msg.reply(str(e))
         try:
+            self.control(msg)
+        except PrintableException as e:
+            msg.user.send_message(e)
+        try:
             response = self.function(msg, *args)
         except PrintableException as e:
             response = str(e)
@@ -50,6 +54,11 @@ class Command(object):
             return
         if response is not None:
             msg.reply(response)
+
+    def control(self, msg):
+        if not hasattr(self.function, 'control'):
+            return True
+        return self.function.control.check(msg)
 
     def __repr__(self):
         if self.symbol:
@@ -63,7 +72,7 @@ class Commands(defaultdict):
         super(Commands, self).__init__(list)
 
     def incoming(self, msg):
-        if msg.is_groupchat and msg.groupchat.bot.username == msg.user.username:
+        if msg.is_from_me:
             return
         if not msg.body.startswith(settings.SYMBOL):
             return

@@ -22,6 +22,17 @@ class Message(Event):
             self.user.send_message(body)
 
     @property
+    def is_from_me(self):
+        if self.user.id:
+            property = 'id'
+        else:
+            property = 'username'
+        if self.is_groupchat:
+            return getattr(self.groupchat.bot, property) == getattr(self.user.username, property)
+        else:
+            return getattr(self.protocol.bot, property) == getattr(self.user, property)
+
+    @property
     def is_groupchat(self):
         raise NotImplementedError("This protocol doesn't know if the message is from a groupchat.")
 

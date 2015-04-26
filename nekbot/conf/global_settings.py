@@ -10,4 +10,8 @@ PROTOCOLS = [
 PLUGINS = [
 ]
 
+PERMS_METHODS = [
+    'nekbot.core.permissions.perms_from_settings',
+]
+
 SYMBOL = '!'
