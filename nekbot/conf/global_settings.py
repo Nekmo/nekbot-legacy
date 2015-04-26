@@ -1,13 +1,13 @@
+PERMISSIONS_TREE = {
+    'root': ['admin'],
+    'admin': ['execution'],
+    'execution': []
+}
+
 PROTOCOLS = [
-    # 'telegram',
-    'irc',
 ]
 
 PLUGINS = [
-    'hello',
-    'bot',
-    'random',
-    'test',
 ]
 
 SYMBOL = '!'

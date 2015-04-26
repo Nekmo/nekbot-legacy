@@ -11,13 +11,3 @@ from nekbot.protocols import Protocols
 if '__path__' in globals():
     from pkgutil import extend_path
     __path__ = extend_path(__path__, __name__)
-
-
-if __name__ == '__main__':
-    import logging
-    logging.basicConfig(level=logging.DEBUG)
-    nekbot = NekBot().start()
-    try:
-        nekbot.loop()
-    except (KeyboardInterrupt, SystemExit):
-        nekbot.close()

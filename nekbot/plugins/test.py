@@ -1,5 +1,7 @@
+# coding=utf-8
 from types import IntType
 from nekbot.core.commands import command
+from nekbot.core.commands.temp import TempRegexList, TempRegex
 
 __author__ = 'nekmo'
 
@@ -16,3 +18,18 @@ def args(msg, *args):
 def kwargnumber(msg, number=10):
     assert type(number) is IntType
     return 'Entregado: %i' % number
+
+@command
+def privatemsg(msg):
+    msg.user.send_message('Un mensaje privado')
+
+@command
+def publicmsg(msg):
+    msg.groupchat.send_message('Un mensaje público')
+
+@command
+def test_temp_regex(msg):
+    msg.reply('Elija: [Sn]')
+    temp = TempRegex(msg.protocol, '^(S|s|N|n)$', timeout=5)
+    response = temp.read().next()
+    msg.reply('Usted ha dicho: %s' % response.match[0])

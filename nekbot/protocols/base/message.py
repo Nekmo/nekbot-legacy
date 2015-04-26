@@ -1,7 +1,10 @@
 # coding=utf-8
+from nekbot.protocols.base.event import Event
+
 __author__ = 'nekmo'
 
-class Message(object):
+class Message(Event):
+    event_name = 'message'
 
     def __init__(self, protocol, body, user, groupchat=None):
         """Un nuevo mensaje entrante
@@ -29,6 +32,12 @@ class Message(object):
     @property
     def is_private(self):
         raise NotImplementedError("This protocol doesn't know if the message is private.")
+
+    def _copy(self):
+        return self.__class__(self.protocol, self.body, self.user, self.groupchat)
+
+    def copy(self):
+        return self._copy()
 
     def __str__(self):
         return self.body

@@ -63,6 +63,10 @@ class Commands(defaultdict):
         super(Commands, self).__init__(list)
 
     def incoming(self, msg):
+        if msg.is_groupchat and msg.groupchat.bot.username == msg.user.username:
+            return
+        if not msg.body.startswith(settings.SYMBOL):
+            return
         args = get_arguments(msg.body)
         if not args[0] in self:
             # No es un comando, se ignora

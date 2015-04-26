@@ -8,6 +8,7 @@ class Protocol(threading.Thread):
     def __init__(self, nekbot):
         self.nekbot = nekbot
         threading.Thread.__init__(self)
+        self.name = self.__class__.__name__.lower()
         self.daemon = True
 
         self.init()

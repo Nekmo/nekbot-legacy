@@ -19,3 +19,4 @@ syntax: regexp
 .pypirc
 nekbot/protocols/telegram
 nekbot/plugins/random
+^settings.py
