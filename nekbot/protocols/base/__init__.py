@@ -15,6 +15,11 @@ class Protocol(threading.Thread):
 
         self.init()
 
+    def prepare_message(self, body):
+        if not isinstance(body, (str, unicode)):
+            body = str(body)
+        return body
+
     def propagate(self, event, *args, **kwargs):
         events.propagate(event, self, *args, **kwargs)
 

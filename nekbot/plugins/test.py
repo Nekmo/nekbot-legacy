@@ -3,6 +3,7 @@ from types import IntType
 from nekbot.core.commands import command
 from nekbot.core.commands.control import Control
 from nekbot.core.commands.temp import TempRegex
+from nekbot.core.exceptions import PrintableException
 
 __author__ = 'nekmo'
 
@@ -39,3 +40,11 @@ def test_temp_regex(msg):
 def need_root(msg):
     return 'Hola jefe!'
 need_root.control = Control('root')
+
+@command
+def raise_printable_exception(msg):
+    raise PrintableException("nobody's specs the spanish inquisition!")
+
+@command
+def raise_exception(msg):
+    raise Exception
