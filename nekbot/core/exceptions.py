@@ -17,7 +17,7 @@ class PrintableException(Exception):
         self.msg = msg
 
     def __str__(self):
-        return '%s: %s' % (self.base_msg, self.msg) if self.base_msg else self.msg
+        return ('%s: %s' % (self.base_msg, self.msg)) if self.base_msg else self.msg
 
 
 class InvalidArgument(PrintableException):
@@ -44,12 +44,17 @@ class InvalidArgument(PrintableException):
         body += ' no son válidos.'
         return body
 
+    def give_info(self, value, pos):
+        self.value, self.pos = value, pos
+
     def __str__(self):
         if isinstance(self.value, (list, tuple)):
             body = self.several_arguments()
         else:
             body = self.one_argument()
-        return '%s %s' % (body, self.msg)
+        body = '%s %s' % (body, self.msg)
+        if self.base_msg: body = '%s: %s' % (self.base_msg, body)
+        return body
 
 
     def __repr__(self):
@@ -58,3 +63,6 @@ class InvalidArgument(PrintableException):
 
 class InsufficientPermissions(PrintableException):
     base_msg = 'This action could not be completed due to lack of permissions'
+
+class SecurityError(InvalidArgument):
+    base_msg = 'Security Error'

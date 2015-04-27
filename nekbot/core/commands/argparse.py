@@ -1,6 +1,6 @@
 # coding=utf-8
 import inspect
-from nekbot.core.exceptions import InvalidArgument
+from nekbot.core.exceptions import InvalidArgument, PrintableException
 
 __author__ = 'nekmo'
 
@@ -40,6 +40,11 @@ class ArgParse(object):
             if hasattr(type, '__call__'):
                 value = type(value)
         except Exception as e:
+            if isinstance(e, InvalidArgument):
+                # ¡Es una excepción creada por nosotros. Le damos por si lo necesitase
+                # información adicional y lo lanzamos tal cual
+                e.give_info(value, pos)
+                raise e
             err_class = e.__class__
             # No es un tipo de excepción conocida.
             if not ERRORS.get(err_class): raise e
@@ -54,6 +59,9 @@ class ArgParse(object):
         return value
 
     def parse(self, args):
+        if len(self.arg_types) > len(args):
+            raise PrintableException('Not enough arguments for this command. Missing %i argument%s.' % \
+                                      (len(self.arg_types), 's' if len(self.arg_types) > 1 else ''))
         all_types = tuple(self.arg_types) + tuple(self.kwarg_types)
         for i, arg in enumerate(args):
             if len(all_types) <= i: break
