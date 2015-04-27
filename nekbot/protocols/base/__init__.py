@@ -5,6 +5,8 @@ __author__ = 'nekmo'
 
 
 class Protocol(threading.Thread):
+    features = []
+
     def __init__(self, nekbot):
         self.nekbot = nekbot
         threading.Thread.__init__(self)

@@ -1,5 +1,6 @@
 # coding=utf-8
 from nekbot.protocols.base.event import Event
+from nekbot.utils.strings import long_message
 
 __author__ = 'nekmo'
 
@@ -15,11 +16,16 @@ class Message(Event):
         """
         self.protocol, self.body, self.user, self.groupchat = protocol, body, user, groupchat
 
-    def reply(self, body):
-        if self.is_groupchat and self.is_public:
+    def reply(self, body, notice=False):
+        if notice and 'notice' in self.protocol.features:
+            self.user.send_message(body, True)
+        elif self.is_groupchat and self.is_public:
             self.groupchat.send_message(body)
         else:
             self.user.send_message(body)
+
+    def short_reply(self, body):
+        self.reply(body, not long_message(body))
 
     @property
     def is_from_me(self):

@@ -40,18 +40,18 @@ class Command(object):
         try:
             args = self.argparse.parse(msg.args)
         except Exception as e:
-            return msg.reply(str(e))
+            return msg.short_reply(e)
         try:
             self.control(msg)
         except PrintableException as e:
-            return msg.user.send_message(e)
+            return msg.user.warning(e)
         try:
             response = self.function(msg, *args)
         except PrintableException as e:
             response = str(e)
         except Exception:
             logger.error(traceback.format_exc())
-            msg.reply('El comando %s no finalizó correctamente.' % repr(self))
+            msg.user.send_warning('El comando %s no finalizó correctamente.' % repr(self))
             return
         if response is not None:
             msg.reply(response)

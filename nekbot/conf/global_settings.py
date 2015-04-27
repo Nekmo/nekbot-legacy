@@ -8,6 +8,8 @@ PROTOCOLS = [
 ]
 
 PLUGINS = [
+    'bot',
+    'hello',
 ]
 
 PERMS_METHODS = [

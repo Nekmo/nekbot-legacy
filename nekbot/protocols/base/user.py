@@ -1,4 +1,5 @@
 # coding=utf-8
+from nekbot.utils.strings import long_message
 
 __author__ = 'nekmo'
 
@@ -12,6 +13,12 @@ class User(object):
 
     def send_message(self, body, notice=False):
         raise NotImplementedError("This protocol can't send messages to users.")
+
+    def send_warning(self, body):
+        self.send_message('Warning: %s' % body, not long_message(body))
+
+    def send_error(self, body):
+        self.send_message('Error: %s' % body, not long_message(body))
 
     def get_id(self):
         return self.id
