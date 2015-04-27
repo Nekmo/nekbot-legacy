@@ -20,3 +20,4 @@ syntax: regexp
 nekbot/protocols/telegram
 nekbot/plugins/random
 ^settings.py
+doc.txt

@@ -6,6 +6,7 @@ __author__ = 'nekmo'
 
 class Message(Event):
     event_name = 'message'
+    historical = False
 
     def __init__(self, protocol, body, user, groupchat=None):
         """Un nuevo mensaje entrante
