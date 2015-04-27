@@ -43,7 +43,7 @@ class Command(object):
         try:
             self.control(msg)
         except PrintableException as e:
-            msg.user.send_message(e)
+            return msg.user.send_message(e)
         try:
             response = self.function(msg, *args)
         except PrintableException as e:
@@ -56,9 +56,12 @@ class Command(object):
             msg.reply(response)
 
     def control(self, msg):
-        if not hasattr(self.function, 'control'):
-            return True
-        return self.function.control.check(msg)
+        if hasattr(self.function, 'control'):
+             return self.function.control.check(msg)
+        if hasattr(self.function, 'command_decorator') and \
+                hasattr(self.function.command_decorator, 'control'):
+            return self.function.command_decorator.control.check(msg)
+        return True
 
     def __repr__(self):
         if self.symbol:
@@ -106,7 +109,13 @@ class command:
             name = args[1]
         else:
             name = args[0].func_name
+        args[0].command_decorator = self
+        self.name = name
         cmds.add_command(name, args[0], *args[1:], **kwargs)
 
+    def __repr__(self):
+        return '<@Command %s>' % self.name
+
     def __call__(self, func):
+        if hasattr(self, 'control'): print('!!!')
         return func(*self.args, **self.kwargs)

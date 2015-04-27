@@ -10,7 +10,7 @@ class Control(object):
     def check_perms(self, msg):
         if not self.perm: return
         if not has_perm(msg.user, self.perm):
-            raise InsufficientPermissions('You need permission %s' % perm)
+            raise InsufficientPermissions('You need permission %s' % self.perm)
 
     def check_flood(self, msg):
         pass
