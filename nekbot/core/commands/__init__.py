@@ -3,6 +3,7 @@ from collections import defaultdict
 from logging import getLogger
 import shlex
 import traceback
+import threading
 from nekbot import settings
 from nekbot.core.commands.argparse import ArgParse
 from nekbot.core.exceptions import PrintableException
@@ -86,7 +87,8 @@ class Commands(defaultdict):
         cmd, args = args[0], args[1:]
         msg.args = args
         for command in self[cmd]:
-            command.execute(msg)
+            l = threading.Thread(target=command.execute, args=(msg,))
+            l.start()
 
     def add_command(self, name, function, *args, **kwargs):
         cmd = Command(name, function, *args, **kwargs)

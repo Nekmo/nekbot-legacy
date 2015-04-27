@@ -38,4 +38,4 @@ def test_temp_regex(msg):
 @command
 def need_root(msg):
     return 'Hola jefe!'
-need_root.control = Control('spam')
+need_root.control = Control('root')

@@ -27,7 +27,7 @@ def perms_from_settings(user, wanted_perm):
     if not hasattr(settings, settings_property):
         return False
     perms = getattr(settings, settings_property)
-    if not user.id in perms: return False
+    if not user.get_id() in perms: return False
     for perm in perms[user.id]:
         if wanted_perm in permissions_tree[perm]:
             return True
