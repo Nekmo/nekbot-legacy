@@ -1,8 +1,11 @@
 # coding=utf-8
+from logging import getLogger
 import threading
 from nekbot.utils.modules import get_module, get_main_class
 
 __author__ = 'nekmo'
+
+logger = getLogger('nekbot.core.modular')
 
 class Modular(object):
     """Modular es una clase genérica para cargar módulos desde un path e instanciarlos.
@@ -25,9 +28,12 @@ class Modular(object):
         if self.module_path is None:
             raise self.ModularError('Please, provide a module_path for %s' % self.__class__)
 
+    def get_module(self, module_path):
+        return get_module(module_path)
+
     def start(self, module_name):
         # Obtengo el módulo por el module_name
-        module = get_module(self.module_path % module_name)
+        module = self.get_module(self.module_path % module_name)
         self.modules[module_name] = module
         instance = None
         try:
@@ -40,9 +46,13 @@ class Modular(object):
         if instance is not None:
             if not hasattr(self, module_name):
                 setattr(self, module_name, instance)
-            instance = instance(self.nekbot)
-            instance.start()  # Iniciar la instancia
-            self.instances[module_name] = instance
+            try:
+                instance = instance(self.nekbot)
+            except Exception as e:
+                logger.error('Instance for "%s" is invalid: %s' % (module_name, e))
+            else:
+                instance.start()  # Iniciar la instancia
+                self.instances[module_name] = instance
 
     def close(self):
         for instance in self.instances.values():

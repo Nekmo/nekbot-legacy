@@ -80,6 +80,8 @@ class Commands(defaultdict):
             return
         if not msg.body.startswith(settings.SYMBOL):
             return
+        if msg.historical:
+            return
         args = get_arguments(msg.body)
         if not args[0] in self:
             # No es un comando, se ignora
