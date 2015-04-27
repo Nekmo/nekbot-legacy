@@ -1,6 +1,7 @@
 # coding=utf-8
 from logging import getLogger
 from time import sleep
+import datetime
 from nekbot.plugins import Plugins
 
 from .signals import events, event
@@ -19,6 +20,7 @@ class NekBot(object):
     def __init__(self):
         self.protocols = Protocols(self, settings.PROTOCOLS)
         self.plugins = Plugins(self, settings.PLUGINS)
+        self.start_datetime = datetime.datetime.now()
 
     def start(self):
         self.start_protocols()
