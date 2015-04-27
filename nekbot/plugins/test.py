@@ -1,7 +1,7 @@
 # coding=utf-8
 from types import IntType
 from nekbot.core.commands import command
-from nekbot.core.commands.control import Control
+from nekbot.core.commands.control import control
 from nekbot.core.commands.temp import TempRegex
 from nekbot.core.exceptions import PrintableException
 
@@ -37,9 +37,14 @@ def test_temp_regex(msg):
     msg.reply('Usted ha dicho: %s' % response.match[0])
 
 @command
+@control('root')
 def need_root(msg):
     return 'Hola jefe!'
-need_root.control = Control('root')
+
+@command
+@control('spam')
+def need_spam(msg):
+    return 'Spam! Spam! Spam!!'
 
 @command
 def raise_printable_exception(msg):

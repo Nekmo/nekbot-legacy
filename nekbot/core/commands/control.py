@@ -1,3 +1,4 @@
+# coding=utf-8
 from nekbot.core.exceptions import InsufficientPermissions
 from nekbot.core.permissions import has_perm
 
@@ -18,3 +19,17 @@ class Control(object):
     def check(self, msg):
         self.check_perms(msg)
         self.check_flood(msg)
+
+def control(*args, **kwargs):
+    """Decorador para añadir restricciones a la ejecución del comando.
+
+    Uso:
+        @control(perm='...', flood='...')
+        def function():
+            pass
+    """
+    def decorator(f):
+        control = Control(*args, **kwargs)
+        f.control = control
+        return f
+    return decorator

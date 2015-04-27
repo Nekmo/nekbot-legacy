@@ -44,7 +44,7 @@ class Command(object):
         try:
             self.control(msg)
         except PrintableException as e:
-            return msg.user.warning(e)
+            return msg.user.send_warning(e)
         try:
             response = self.function(msg, *args)
         except PrintableException as e:
