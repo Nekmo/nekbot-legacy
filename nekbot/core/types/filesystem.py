@@ -18,7 +18,7 @@ class Node(object):
         return node
 
     def __call__(self, node):
-        node = os.path.join(self.root, node)
+        node = os.path.abspath(os.path.join(self.root, node))
         if not node.startswith(self.root):
             raise SecurityError('The path does not belong to the base path.', node)
         if not os.path.exists(node):
@@ -26,7 +26,13 @@ class Node(object):
         return self.additional_checks(node)
 
 class File(Node):
-    pass
+    def additional_checks(self, node):
+        if not os.path.isfile(node):
+            raise InvalidArgument('The path is not a file.', node)
+        return node
 
 class Dir(Node):
-    pass
+    def additional_checks(self, node):
+        if not os.path.isdir(node):
+            raise InvalidArgument('The path is not a directory.', node)
+        return node
