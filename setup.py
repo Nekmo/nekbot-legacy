@@ -2,10 +2,11 @@
 import re
 
 PROJECT = 'nekbot'
-VERSION = '0.1'
+VERSION = open('VERSION').read().replace('\n', '')
 MODULES = [
     'nekbot',
 ]
+ROOT_INCLUDE = ['requirements.txt', 'VERSION', 'LICENSE.txt']
 __author__ = 'nekmo'
 
 
@@ -137,7 +138,7 @@ def find_package_data(where='.', package='',
 ##############################################################################
 
 description = 'NekBot, a modular multiprotocol bot.'
-package_data = {}
+package_data = {'': ROOT_INCLUDE}
 
 for module in MODULES:
     package_data.update(find_package_data(
@@ -145,6 +146,8 @@ for module in MODULES:
         package=module,
         only_in_packages=False,
     ))
+
+print(package_data)
 
 setup(
     name=PROJECT,

@@ -25,11 +25,13 @@ class Node(object):
             return self.path_not_exist(node)
         return self.additional_checks(node)
 
+
 class File(Node):
     def additional_checks(self, node):
         if not os.path.isfile(node):
             raise InvalidArgument('The path is not a file.', node)
         return node
+
 
 class Dir(Node):
     def additional_checks(self, node):
