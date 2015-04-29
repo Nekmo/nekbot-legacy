@@ -147,8 +147,6 @@ for module in MODULES:
         only_in_packages=False,
     ))
 
-print(package_data)
-
 setup(
     name=PROJECT,
     version=VERSION,
@@ -195,6 +193,7 @@ setup(
 
     download_url='https://bitbucket.org/Nekmo/nekbot-mirai/get/default.tar.gz',
     keywords=['nekbot', 'bot', 'irc', 'xmpp', 'chat', 'telegram', 'jabber'],
+    scripts=[os.path.join('scripts', file) in os.listdir('scripts')],
 
     # entry_points={},
 
