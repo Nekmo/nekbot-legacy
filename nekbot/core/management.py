@@ -1,12 +1,23 @@
 import os
 import logging
 import sys
+import shutil
 
 __author__ = 'nekmo'
 __dir__ = os.path.abspath(os.path.dirname(__file__))
 
 nekbot_src_dir = os.path.dirname(os.path.dirname(__file__))
 conf_src_dir = os.path.join(nekbot_src_dir, 'conf')
+
+
+def copytree(src, dst, symlinks=False, ignore=None):
+    for item in os.listdir(src):
+        s = os.path.join(src, item)
+        d = os.path.join(dst, item)
+        if os.path.isdir(s):
+            shutil.copytree(s, d, symlinks, ignore)
+        else:
+            shutil.copy2(s, d)
 
 
 class Management(object):
@@ -36,15 +47,12 @@ class Management(object):
                             default=settings)
         parser.sub = parser.add_subparsers()
         # Subcommand Create bot
-        parser_createbot = parser.sub.add_parser('createbot',
-                                                 help='Create a new bot directory usign template.'
-                                                 )
+        parser_createbot = parser.sub.add_parser('createbot', help='Create a new bot directory usign template.')
         parser_createbot.set_defaults(which='createbot')
         parser_createbot.add_argument('name')
+        parser_createbot.add_argument('dest', nargs='?', default=None)
         # Subcommand start
-        parser_start = parser.sub.add_parser('start',
-                                             help='Start bot.'
-                                             )
+        parser_start = parser.sub.add_parser('start', help='Start bot.')
         parser_start.set_defaults(which='start')
         return parser
 
@@ -61,15 +69,18 @@ class Management(object):
         getattr(self, 'command_' + args.which)(args)
 
     def command_createbot(self, args):
-        if os.path.exists(args.name):
-            sys.stderr.write("Sorry, directory %s exists. I can't create directory.\n" % args.name)
+        if args.dest:
+            dest = args.dest
+        else:
+            dest = args.name
+        if not args.dest and os.path.exists(dest):
+            sys.stderr.write("Sorry, directory %s exists. I can't create directory.\n" % dest)
             sys.exit(1)
-        import shutil
         try:
-            shutil.copytree(os.path.join(conf_src_dir, 'project_template'), args.name)
+            shutil.copytree(os.path.join(conf_src_dir, 'project_template'), dest)
         except Exception as e:
             sys.stderr.write('Unknown error: %s\n' % e)
-        print('Directory created as %s' % args.name)
+        print('Project created as %s' % dest)
 
     def command_start(self, args):
         from nekbot import NekBot
