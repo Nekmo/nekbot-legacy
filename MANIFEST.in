@@ -1,10 +1,8 @@
-nekbot/core/types/filesystem.py
-setup.py
 MANIFEST.in
-VERSION
 .hgignore
 LICENSE.txt
 README
+VERSION
 contributors.txt
 docs/Makefile
 docs/conf.py
@@ -31,6 +29,7 @@ nekbot/core/modular.py
 nekbot/core/permissions/__init__.py
 nekbot/core/signals.py
 nekbot/core/types/__init__.py
+nekbot/core/types/filesystem.py
 nekbot/plugins/__init__.py
 nekbot/plugins/bot.py
 nekbot/plugins/hello.py
@@ -50,4 +49,5 @@ nekbot/utils/threads.py
 requirements.txt
 scripts/nekbot-admin
 setup.cfg
+setup.py
 
