@@ -35,7 +35,7 @@ def get_url(ir):
     return ir.link.url
 
 requirements = parse_requirements('requirements.txt', session=uuid.uuid1())
-install_requires = [str(ir.req) for ir in requirements if get_url(ir)]
+install_requires = [str(ir.req) for ir in requirements if not not get_url(ir)]
 
 packages = find_packages(__dir__)
 # Prevent include symbolic links
