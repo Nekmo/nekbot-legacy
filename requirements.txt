@@ -1,2 +1,2 @@
 # Required by plugins.
-requests==2.6.0
+requests
