@@ -29,7 +29,7 @@ except IOError:
 __dir__ = os.path.abspath(os.path.dirname(__file__))
 
 requirements = parse_requirements('requirements.txt', session=uuid.uuid1())
-install_requires = [str(ir.req) for ir in requirements if ir.link and not ir.link.url]
+install_requires = [str(ir.req) for ir in requirements if getattr(ir, 'url', ir.url.link)]
 
 packages = find_packages(__dir__)
 # Prevent include symbolic links
