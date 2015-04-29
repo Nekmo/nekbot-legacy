@@ -10,6 +10,8 @@ conf_src_dir = os.path.join(nekbot_src_dir, 'conf')
 
 
 class Management(object):
+    no_configuration_required = ['createbot']
+
     def __init__(self, settings=None, description=None, default_level=logging.INFO):
         self.parser = self.argument_parser(settings, description, default_level)
 
@@ -51,7 +53,8 @@ class Management(object):
         if parser is None:
             parser = self.parser
         args = parser.parse_args()
-        settings.configure(args.settings)
+        if not args.which in self.no_configuration_required:
+            settings.configure(args.settings)
         logging.basicConfig(level=args.loglevel)
         if not hasattr(self, 'command_' + args.which):
             raise ValueError('Comand %s is invalid.' % args.which)
