@@ -1,9 +1,7 @@
-include MANIFEST.in
-include VERSION
-include requirements.txt
-include .hgignore
 include LICENSE.txt
+include MANIFEST.in
 include README
+include VERSION
 include contributors.txt
 include docs/Makefile
 include docs/conf.py
@@ -47,7 +45,7 @@ include nekbot/utils/decorators.py
 include nekbot/utils/modules.py
 include nekbot/utils/strings.py
 include nekbot/utils/threads.py
+include requirements.txt
 include scripts/nekbot-admin
 include setup.cfg
 include setup.py
-include 
