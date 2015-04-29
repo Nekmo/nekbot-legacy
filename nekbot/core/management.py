@@ -77,7 +77,7 @@ class Management(object):
             sys.stderr.write("Sorry, directory %s exists. I can't create directory.\n" % dest)
             sys.exit(1)
         try:
-            shutil.copytree(os.path.join(conf_src_dir, 'project_template'), dest)
+            copytree(os.path.join(conf_src_dir, 'project_template'), dest)
         except Exception as e:
             sys.stderr.write('Unknown error: %s\n' % e)
         print('Project created as %s' % dest)
