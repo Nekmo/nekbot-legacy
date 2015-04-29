@@ -8,12 +8,54 @@ Supported protocols
 - IRC.
 - Jabber/XMPP (coming soon).
 
-Instalación en 5 minutos con virtualenvwrapper
-==============================================
+Instalación en 5 minutos con virtualenvwrapper (recomendado)
+============================================================
+Virtualenvwrapper te permite crear entornos virtuales de Python de forma fácil y sencilla. No te preocupes, aunque se
+llamen "entornos virtuales", no existe virtualización alguna. Sólo son entornos separados a los del sistema para
+evitar conflictos en las dependencias y poder instalar y actualizar paquetes sin preocupaciones.
+
 Si no tuvieses en tu sistema pip, deberás instalarlo::
 
+    sudo apt-get install python-pip # Debian y ubuntu
+    sudo pacman -S python2-pip # Arch Linux
+    sudo yum install python-pio # Fedora
+    # Otros: https://pip.pypa.io/en/latest/installing.html
 
+Instala virtualenvwrapper.nekbot con pip::
 
+    sudo pip install virtualenvwrapper.nekbot
+
+Crea un directorio en tu directorio personal para los proyectos de Virtualenvwrapper (donde residirán los bots). Por
+ejemplo, puedes crearlo como::
+
+    mkdir ~/Projects
+
+Añade al final de tu .bashrc las siguientes líneas::
+
+    cat <<EOT >> ~/.bashrc
+    # Donde residirá el virtualenv (bibliotecas). Se crea automáticamente.
+    export WORKON_HOME=$HOME/.virtualenvs
+    # Directorio de los proyectos. Donde estarán tus bots. Debes crearlo.
+    export PROJECT_HOME=$HOME/Workspace
+    # Permite usar virtualenvwrapper con este usuario. En ocasiones /usr/bin
+    # en vez de /usr/local/bin. Mira donde se ha creado.
+    source /usr/local/bin/virtualenvwrapper.sh
+    EOT
+
+Recarga tu consola para poder usar virtualenvwrapper::
+
+    source ~/.bashrc
+
+Crea el nuevo proyecto con el nombre que tú quieras::
+
+    mkproject -t nekbot minuevobot
+
+En algunos sistemas como Arch, la versión por defecto de Python es la 3. NekBot no está probado con dicha versión
+(pero podría funcionar). Para usar Python2 con dichos sistemas::
+
+    mkproject -t nekbot -p /usr/bin/python2 minuevobot
+
+¡¡Y listo!! Ya tienes tu nuevo bot.
 
 Create plugins easily!
 ======================
