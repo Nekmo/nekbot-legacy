@@ -193,7 +193,7 @@ setup(
 
     download_url='https://bitbucket.org/Nekmo/nekbot-mirai/get/default.tar.gz',
     keywords=['nekbot', 'bot', 'irc', 'xmpp', 'chat', 'telegram', 'jabber'],
-    scripts=[os.path.join('scripts', file) in os.listdir('scripts')],
+    scripts=[os.path.join('scripts', file) for file in os.listdir('scripts')],
 
     # entry_points={},
 
