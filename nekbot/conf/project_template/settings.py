@@ -9,4 +9,5 @@ PLUGINS = [
     # 'bot',
     # 'random',
     # 'test',
+    # 'commands',
 ]
