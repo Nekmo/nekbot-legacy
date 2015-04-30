@@ -76,6 +76,8 @@ class Management(object):
         if not args.dest and os.path.exists(dest):
             sys.stderr.write("Sorry, directory %s exists. I can't create directory.\n" % dest)
             sys.exit(1)
+        elif not os.path.exists(dest):
+            os.mkdir(dest)
         try:
             copytree(os.path.join(conf_src_dir, 'project_template'), dest)
         except Exception as e:
