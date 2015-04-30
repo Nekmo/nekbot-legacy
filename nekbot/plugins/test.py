@@ -75,6 +75,12 @@ def docargs(msg, arg1):
 
 @command('docargs2', str, int)
 def docargs2(msg, arg1, arg2):
-    """Otro ejemplo de doc. pero con 1 arg.
+    """Otro ejemplo de doc. pero con 2  args. Uso: {usage}
+    """
+    pass
+
+@command('docargs3', str, int)
+def docargs3(msg, arg1, arg2, arg3=5):
+    """Otro ejemplo de doc. pero con 2  args. Uso: {usage}
     """
     pass

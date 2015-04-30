@@ -19,7 +19,7 @@ class InspectFunction(object):
         # añado el argumento si no hay para la posición, pero si no no lo modifico
         # Le quito 1 porque el primer argumento es "msg", el objeto Msg
         append_or_update(self.arg_types, [str] * (len(arg_types) - 1), False)
-    
+
     def get_type(self, value):
         if hasattr(value, '__call__'):
             return value
