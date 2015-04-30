@@ -69,7 +69,7 @@ def doc(msg):
 
 @command('docargs')
 def docargs(msg, arg1):
-    """Otro ejemplo de doc. pero con 1 arg.
+    """Otro ejemplo de doc. pero con 1 arg. Uso: {command} {args_doc}
     """
     pass
 

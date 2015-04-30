@@ -2,6 +2,7 @@
 import inspect
 from nekbot.core.exceptions import InvalidArgument, PrintableException
 from nekbot.utils.iter import append_or_update
+from nekbot.utils.survey import InspectFunction
 
 __author__ = 'nekmo'
 
@@ -15,30 +16,7 @@ ERRORS = {
     },
 }
 
-class ArgParse(object):
-    def __init__(self):
-        self.arg_types = []
-        self.kwarg_types = []
-
-    def set_arg_types(self, arg_types):
-        append_or_update(self.arg_types, arg_types)
-
-    def set_from_function(self, function):
-        argspec = inspect.getargspec(function)
-        arg_types, kwargs_types = argspec.args, argspec.defaults
-        if kwargs_types:
-            self.kwarg_types = map(self.get_type, kwargs_types)
-        # añado el argumento si no hay para la posición, pero si no no lo modifico
-        # Le quito 1 porque el primer argumento es "msg", el objeto Msg
-        append_or_update(self.arg_types, [str] * (len(arg_types) - 1), False)
-
-    def get_type(self, value):
-        if hasattr(value, '__call__'):
-            return value
-        elif hasattr(value.__class__, '__call__'):
-            return value.__class__
-        else:
-            return str
+class ArgParse(InspectFunction):
 
     def parse_arg(self, type, value, pos=None):
         try:

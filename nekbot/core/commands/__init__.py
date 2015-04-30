@@ -38,7 +38,7 @@ class Command(object):
 
     def get_doc(self):
         doc = Doc(self.name, repr(self))
-        doc.set_args_types(self._args)
+        doc.set_arg_types(self._args)
         doc.set_from_function(self.function)
         return doc
 
