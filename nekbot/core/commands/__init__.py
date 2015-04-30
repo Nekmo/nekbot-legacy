@@ -6,6 +6,7 @@ import traceback
 import threading
 from nekbot import settings
 from nekbot.core.commands.argparse import ArgParse
+from nekbot.core.commands.doc import Doc
 from nekbot.core.exceptions import PrintableException
 from nekbot.utils.decorators import optional_args
 
@@ -26,6 +27,7 @@ class Command(object):
         self.function = function
         self.symbol = symbol if symbol is not None else self.symbol
         self.argparse = self.get_argparse(args, function)
+        self._args = args
 
     def get_argparse(self, arg_types, function):
         argparse = ArgParse()
@@ -34,9 +36,19 @@ class Command(object):
         # argparse.get_from_function(self.function)
         return argparse
 
+    def get_doc(self):
+        doc = Doc(self.name, repr(self))
+        doc.set_args_types(self._args)
+        doc.set_from_function(self.function)
+        return doc
+
     def execute(self, msg):
         if not hasattr(msg, 'args'):
             msg.args = get_arguments(msg.body)[1:]
+        if '--help' in msg.args or '-h' in msg.args:
+            # Return documentation.
+            msg.reply(str(self.get_doc()))
+            return
         try:
             args = self.argparse.parse(msg.args)
         except Exception as e:

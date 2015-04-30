@@ -53,3 +53,28 @@ def raise_printable_exception(msg):
 @command
 def raise_exception(msg):
     raise Exception
+
+
+@command
+def multiline(self):
+    return """Texto
+    de
+    ejemplo"""
+
+@command
+def doc(msg):
+    """Esto es un ejemplo de documentación.
+    """
+    pass
+
+@command('docargs')
+def docargs(msg, arg1):
+    """Otro ejemplo de doc. pero con 1 arg.
+    """
+    pass
+
+@command('docargs2', str, int)
+def docargs2(msg, arg1, arg2):
+    """Otro ejemplo de doc. pero con 1 arg.
+    """
+    pass
