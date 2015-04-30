@@ -20,6 +20,7 @@ include nekbot/core/__init__.py
 include nekbot/core/commands/__init__.py
 include nekbot/core/commands/argparse.py
 include nekbot/core/commands/control.py
+include nekbot/core/commands/doc.py
 include nekbot/core/commands/temp.py
 include nekbot/core/exceptions.py
 include nekbot/core/handlers.py
@@ -42,6 +43,7 @@ include nekbot/protocols/base/user.py
 include nekbot/utils/__init__.py
 include nekbot/utils/auth.py
 include nekbot/utils/decorators.py
+include nekbot/utils/iter.py
 include nekbot/utils/modules.py
 include nekbot/utils/strings.py
 include nekbot/utils/threads.py

@@ -1,6 +1,7 @@
 # coding=utf-8
 import inspect
 from nekbot.core.exceptions import InvalidArgument, PrintableException
+from nekbot.utils.iter import append_or_update
 
 __author__ = 'nekmo'
 
@@ -20,12 +21,16 @@ class ArgParse(object):
         self.kwarg_types = []
 
     def set_arg_types(self, arg_types):
-        self.arg_types = arg_types
+        append_or_update(self.arg_types, arg_types)
 
     def set_from_function(self, function):
-        kwargs_types = inspect.getargspec(function).defaults
+        argspec = inspect.getargspec(function)
+        arg_types, kwargs_types = argspec.args, argspec.defaults
         if kwargs_types:
             self.kwarg_types = map(self.get_type, kwargs_types)
+        # añado el argumento si no hay para la posición, pero si no no lo modifico
+        # Le quito 1 porque el primer argumento es "msg", el objeto Msg
+        append_or_update(self.arg_types, [str] * (len(arg_types) - 1), False)
 
     def get_type(self, value):
         if hasattr(value, '__call__'):
