@@ -1,23 +1,21 @@
 # coding=utf-8
 from collections import defaultdict
 from logging import getLogger
-import shlex
 import traceback
 import threading
+
 from nekbot import settings
 from nekbot.core.commands.argparse import ArgParse
 from nekbot.core.commands.doc import Doc
 from nekbot.core.exceptions import PrintableException
 from nekbot.utils.decorators import optional_args
+from nekbot.utils.strings import split_arguments
+
 
 __author__ = 'nekmo'
 
 logger = getLogger('nekbot.core.commands')
 
-def get_arguments(body):
-    """Dividir una cadena de texto en un listado de argumentos como en un shell.
-    """
-    return shlex.split(body)
 
 class Command(object):
     symbol = True
@@ -44,13 +42,13 @@ class Command(object):
 
     def execute(self, msg):
         if not hasattr(msg, 'args'):
-            msg.args = get_arguments(msg.body)[1:]
+            msg.args = split_arguments(msg.body)[1:]
         if '--help' in msg.args or '-h' in msg.args:
             # Return documentation.
             msg.reply(str(self.get_doc()))
             return
         try:
-            args = self.argparse.parse(msg.args)
+            args = self.argparse.parse(msg.args, msg)
         except Exception as e:
             return msg.short_reply(e)
         try:
@@ -94,7 +92,7 @@ class Commands(defaultdict):
             return
         if msg.historical:
             return
-        args = get_arguments(msg.body)
+        args = split_arguments(msg.body)
         if not args[0] in self:
             # No es un comando, se ignora
             return

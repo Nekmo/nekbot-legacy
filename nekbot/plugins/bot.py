@@ -1,6 +1,8 @@
 # coding=utf-8
 import platform
 from nekbot.core.commands import command
+from nekbot.utils.human import strdelta
+from nekbot.utils.timeutils import since
 
 __author__ = 'nekmo'
 
@@ -14,3 +16,10 @@ def about(msg):
         ', '.join([protocol for protocol in msg.protocol.nekbot.protocols.modules_names])
     )
     msg.reply(body)
+
+
+@command
+def uptime(msg):
+    """Tiempo que llevo conectado. {usage}
+    """
+    return strdelta(since(msg.protocol.nekbot.start_datetime))

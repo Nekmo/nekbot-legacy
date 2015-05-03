@@ -5,3 +5,4 @@ __author__ = 'nekmo'
 @command
 def commands(msg):
     return 'Available commands: %s. Tip!! Use <command> -h for help.' % ' '.join(sorted(cmds.keys()))
+

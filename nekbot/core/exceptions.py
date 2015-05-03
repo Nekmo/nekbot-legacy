@@ -1,5 +1,5 @@
 # coding=utf-8
-from nekbot.utils.strings import human_join
+from nekbot.utils.human import human_join
 
 __author__ = 'nekmo'
 
