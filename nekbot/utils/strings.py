@@ -1,6 +1,7 @@
 # coding=utf-8
 import shlex
 import re
+from nekbot.utils.ints import get_int
 
 __author__ = 'nekmo'
 
@@ -26,3 +27,20 @@ def split_arguments(body):
     args = shlex.split(body)
     args = map(lambda x: x.replace('\x00', "'"), args)
     return args
+
+
+def find_occurrences(key, text):
+    return map(lambda x: x.start(), re.finditer(re.escape(key), text))
+
+
+def limit_context(key, text, chars_context=10, limiter='[...]'):
+    results = []
+    for occurrence in find_occurrences(key, text):
+        part_a = text[get_int(occurrence - chars_context, 0):occurrence]
+        part_b = text[occurrence + len(key):get_int(occurrence + len(key) + chars_context, len(text))]
+        results.append('{limiter}%s{key}%s{limiter}'.format(**locals()) % (part_a, part_b))
+    return ' '.join(results)
+
+
+def highlight_occurrence(text, occurrence, char='*'):
+    return re.sub('(%s)' % re.escape(occurrence), r'{char}\1{char}'.format(char=char), text)

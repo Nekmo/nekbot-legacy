@@ -25,15 +25,17 @@ class Doc(InspectFunction):
         super(Doc, self).set_from_function(function)
         self.arg_names = inspect.getargspec(function).args[1:]  # Ignoro el primero, que es el Msg
         self.kwargs_values = inspect.getargspec(function).defaults
-        self.kwargs_names = inspect.getargspec(function).args[-1 * len(self.kwargs_values):]
+        self.kwargs_names = inspect.getargspec(function).args[-1 * len(self.kwargs_values if self.kwargs_values else
+                                                                       []):]
         if function.__doc__:
             self.msg = self.process_doc_msg(function.__doc__)
 
     def args_doc(self):
         args = [('<%s (%s)>' % (self.arg_names[i], self.get_type_name(type))) for i, type
                 in enumerate(self.arg_types)]
-        args += ['[%s (%s)]' % (name, self.kwargs_values[i]) for i, name
-                 in enumerate(self.kwargs_names)]
+        if self.kwargs_values:
+            args += ['[%s (%s)]' % (name, self.kwargs_values[i]) for i, name
+                     in enumerate(self.kwargs_names)]
         return ' '.join(args)
 
     def get_usage(self):

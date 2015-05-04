@@ -3,13 +3,14 @@ from collections import defaultdict
 from logging import getLogger
 import traceback
 import threading
+import re
 
 from nekbot import settings
 from nekbot.core.commands.argparse import ArgParse
 from nekbot.core.commands.doc import Doc
 from nekbot.core.exceptions import PrintableException
 from nekbot.utils.decorators import optional_args
-from nekbot.utils.strings import split_arguments
+from nekbot.utils.strings import split_arguments, highlight_occurrence, limit_context
 
 
 __author__ = 'nekmo'
@@ -19,6 +20,7 @@ logger = getLogger('nekbot.core.commands')
 
 class Command(object):
     symbol = True
+    _doc = None
 
     def __init__(self, name=None, function=None, symbol=None, *args, **kwargs):
         self.name = name
@@ -40,7 +42,14 @@ class Command(object):
         doc = Doc(self.name, repr(self))
         doc.set_arg_types(self._args)
         doc.set_from_function(self.function)
+        self._doc = doc
         return doc
+
+    @property
+    def doc(self):
+        if self._doc is not None: return self._doc
+        self._doc = str(self.get_doc())
+        return self._doc
 
     def execute(self, msg):
         if not hasattr(msg, 'args'):
@@ -107,6 +116,25 @@ class Commands(defaultdict):
     def add_command(self, name, function, *args, **kwargs):
         cmd = Command(name, function, *args, **kwargs)
         self[repr(cmd)].append(cmd)
+
+    def search(self, term):
+        results_cmd = []
+        results_doc = []
+        for cmd_repr in self.keys():
+            if not term in cmd_repr:
+                continue
+            results_cmd.append("%s (%s)" % (cmd_repr, highlight_occurrence(cmd_repr, term)))
+        for command_list in self.values():
+            for command in command_list:
+                if not term in command.doc:
+                    continue
+                context = limit_context(term, command.doc)
+                print(context)
+                results_doc.append("%s (%s)" % (
+                    repr(command), highlight_occurrence(context, term)
+                ))
+        return results_cmd, results_doc
+
 
 cmds = Commands()
 
