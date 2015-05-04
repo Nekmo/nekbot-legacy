@@ -47,6 +47,7 @@ include nekbot/utils/__init__.py
 include nekbot/utils/auth.py
 include nekbot/utils/decorators.py
 include nekbot/utils/human.py
+include nekbot/utils/ints.py
 include nekbot/utils/iter.py
 include nekbot/utils/modules.py
 include nekbot/utils/strings.py
