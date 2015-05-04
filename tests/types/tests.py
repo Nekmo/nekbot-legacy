@@ -64,3 +64,13 @@ def test_text_no_args():
     args = split_args[1:]
     text.parse(split_args[0], args, msg, 1)
     assert args == []
+
+
+def test_text_quotes():
+    """Debería devolverse la frase original con los quotes
+    """
+    body = 'spam "spam eggs" spam'
+    msg = Message('test', body, 'test')
+    text = Text()
+    args = split_arguments(msg.body)
+    assert text.parse(args[0], args[1:], msg, 1) == body

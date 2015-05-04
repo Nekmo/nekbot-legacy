@@ -3,6 +3,12 @@ from inspect import getargspec
 from nekbot.utils.iter import append_or_update
 
 
+def kwargs_function(function):
+    argspec = getargspec(function)
+    kwarg_names = argspec.args[-len(argspec.defaults):]
+    return {kwarg_name: argspec.defaults[i] for i, kwarg_name in enumerate(kwarg_names)}
+
+
 class InspectFunction(object):
     def __init__(self):
         self.arg_types = []
@@ -10,14 +16,18 @@ class InspectFunction(object):
 
     def set_arg_types(self, arg_types):
         append_or_update(self.arg_types, arg_types)
+
+    def set_kwarg_types(self, kwarg_types):
+        append_or_update(self.kwarg_types, kwarg_types)
     
     def set_from_function(self, function):
         argspec = getargspec(function)
         arg_types, kwargs_types = argspec.args, argspec.defaults
         if kwargs_types:
-            self.kwarg_types = map(self.get_type, kwargs_types)
+            append_or_update(self.kwarg_types, map(self.get_type, kwargs_types), False)
         # añado el argumento si no hay para la posición, pero si no no lo modifico
         # Le quito 1 porque el primer argumento es "msg", el objeto Msg
+        arg_types = arg_types[:-len(kwargs_types if kwargs_types else [])]
         append_or_update(self.arg_types, [str] * (len(arg_types) - 1), False)
 
     def get_type(self, value):

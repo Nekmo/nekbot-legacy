@@ -20,17 +20,19 @@ logger = getLogger('nekbot.core.commands')
 class Command(object):
     symbol = True
 
-    def __init__(self, name=None, function=None, symbol=None, *args):
+    def __init__(self, name=None, function=None, symbol=None, *args, **kwargs):
         self.name = name
         self.function = function
         self.symbol = symbol if symbol is not None else self.symbol
-        self.argparse = self.get_argparse(args, function)
+        self.argparse = self.get_argparse(args, kwargs, function)
         self._args = args
+        self._kwargs = kwargs # TODO el orden es importante
 
-    def get_argparse(self, arg_types, function):
+    def get_argparse(self, arg_types, kwargs, function):
         argparse = ArgParse()
         argparse.set_arg_types(arg_types)
         argparse.set_from_function(function)
+        argparse.set_kwargs(kwargs, function)
         # argparse.get_from_function(self.function)
         return argparse
 

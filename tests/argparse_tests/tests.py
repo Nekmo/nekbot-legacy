@@ -91,5 +91,4 @@ def test_text_argument():
     parser = argparse.ArgParse()
     parser.set_arg_types([Text()])
     parser.set_from_function(myfunction)
-    print(parser.parse(text.split(' '), msg))
     assert parser.parse(text.split(' '), msg) == [text]
