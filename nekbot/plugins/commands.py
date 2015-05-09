@@ -12,7 +12,7 @@ def commands(msg, search='', by_plugin=False):
             response += '- Results in commands names: %s' % ', '.join(sorted(results_cmd))
         if results_cmd and results_doc:
             response += '\n'
-        if results_cmd:
+        if results_doc:
             response += '- Results in documentation: %s' % ', '.join(results_doc)
         return response
     return 'Available commands: %s. Tip!! Use <command> -h for help.' % ' '.join(sorted(cmds.keys()))

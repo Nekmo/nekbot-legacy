@@ -10,7 +10,7 @@ from nekbot.core.commands.argparse import ArgParse
 from nekbot.core.commands.doc import Doc
 from nekbot.core.exceptions import PrintableException
 from nekbot.utils.decorators import optional_args
-from nekbot.utils.strings import split_arguments, highlight_occurrence, limit_context
+from nekbot.utils.strings import split_arguments, highlight_occurrence, limit_context, in_str_no_case
 
 
 __author__ = 'nekmo'
@@ -121,15 +121,14 @@ class Commands(defaultdict):
         results_cmd = []
         results_doc = []
         for cmd_repr in self.keys():
-            if not term in cmd_repr:
+            if not in_str_no_case(term, cmd_repr):
                 continue
             results_cmd.append("%s (%s)" % (cmd_repr, highlight_occurrence(cmd_repr, term)))
         for command_list in self.values():
             for command in command_list:
-                if not term in command.doc:
+                if not in_str_no_case(term, command.doc):
                     continue
                 context = limit_context(term, command.doc)
-                print(context)
                 results_doc.append("%s (%s)" % (
                     repr(command), highlight_occurrence(context, term)
                 ))
@@ -161,5 +160,4 @@ class command:
         return '<@Command %s>' % self.name
 
     def __call__(self, func):
-        if hasattr(self, 'control'): print('!!!')
         return func(*self.args, **self.kwargs)

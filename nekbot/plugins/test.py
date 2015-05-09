@@ -84,3 +84,11 @@ def docargs3(msg, arg1, arg2, arg3=5):
     """Otro ejemplo de doc. pero con 2  args. Uso: {usage}
     """
     pass
+
+@command
+def breakline(msg):
+    return 'Line1\nLine2'
+
+@command
+def get_users(msg):
+    return msg.groupchat.get_users()

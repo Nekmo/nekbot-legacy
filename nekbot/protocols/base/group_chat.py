@@ -12,6 +12,9 @@ class GroupChat(object):
     def send_message(self, body):
         raise NotImplementedError("This protocol can't send public messages.")
 
+    def get_users(self, override=True):
+        raise NotImplementedError("This protocol can't get users list from groupchat.")
+
     @property
     def bot(self):
         raise NotImplementedError('This protocol does not know who I am')

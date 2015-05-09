@@ -21,3 +21,5 @@ nekbot/protocols/telegram
 nekbot/plugins/random
 ^settings.py
 doc.txt
+nekbot/plugins/meetings
+storage

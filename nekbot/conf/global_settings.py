@@ -1,3 +1,5 @@
+STORAGE_DIR = 'storage'
+
 PERMISSIONS_TREE = {
     'root': ['admin'],
     'admin': ['execution'],

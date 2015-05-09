@@ -5,6 +5,8 @@ import re
 import threading
 import datetime
 from nekbot.core.exceptions import PrintableException
+from nekbot.protocols import Message
+from nekbot import _
 
 __author__ = 'nekmo'
 
@@ -84,9 +86,14 @@ class TempRegexList(defaultdict):
 temp_regex_patterns = TempRegexList()
 
 class TempRegex(object):
-    def __init__(self, protocol, pattern, user=None, timeout=300, no_raise=False):
+    def __init__(self, protocol, pattern, user=None, timeout=300, no_raise=False, prevent_own=True):
+        if isinstance(protocol, Message):
+            if user is None:
+                user = protocol.user
+            protocol = protocol.protocol
         if isinstance(pattern, (str, unicode)):
             pattern = re.compile(pattern)
+        self.prevent_own = prevent_own
         self.no_raise = no_raise
         self.pattern = pattern
         self.protocol = protocol
@@ -110,8 +117,62 @@ class TempRegex(object):
                     yield msg
                 else:
                     raise msg
+            if self.prevent_own and getattr(msg, 'is_from_me', False):
+                continue
             yield msg
         yield CancelTemp
 
     def done(self):
         temp_regex_patterns.delete(self)
+
+
+class FirstPattern(TempRegex):
+    def read(self):
+        for msg in super(FirstPattern, self).read():
+            return msg.body
+
+
+class Text(FirstPattern):
+    def __init__(self, protocol, user=None, timeout=300, no_raise=False):
+        super(Text, self).__init__(protocol, '.+', user, timeout, no_raise)
+
+
+class Bool(TempRegex):
+    BOOL_PATTERN = '^(S|N|Y).*'
+    YES_PATTERN = '^(S|Y).*'
+    NO_PATTERN = '^(N).*'
+
+    def __init__(self, protocol, user=None, timeout=300, no_raise=False):
+        pattern = re.compile(self.BOOL_PATTERN, re.IGNORECASE)
+        super(Bool, self).__init__(protocol, pattern, user, timeout, no_raise)
+
+    def read(self):
+        for msg in super(Bool, self).read():
+            response = msg.body
+            if re.match(self.YES_PATTERN, response, re.IGNORECASE):
+                return True
+            elif re.match(self.NO_PATTERN, response, re.IGNORECASE):
+                return False
+            else:
+                raise NotImplementedError
+
+class DatetimeOrDate(TempRegex):
+    REGEX_PATTERN = '(\d{2}/\d{2}/\d{4})( \d{2}\:\d{2}|)'
+    DATETIME_PATTERN = '%d/%m/%Y %H:%M'
+    DATE_PATTERN = '%d/%m/%Y'
+    def __init__(self, protocol, user=None, timeout=300, no_raise=False, from_now=False):
+        self.from_now = from_now
+        super(DatetimeOrDate, self).__init__(protocol, self.REGEX_PATTERN, user, timeout, no_raise)
+
+    def read(self):
+        for msg in super(DatetimeOrDate, self).read():
+            pattern = self.DATETIME_PATTERN if msg.match[0][1] else self.DATE_PATTERN
+            try:
+                dt = datetime.datetime.strptime(msg.body, pattern)
+            except ValueError:
+                msg.reply(_('Date or datetime is invalid. Please, provide a valid value.'))
+                continue
+            if self.from_now and datetime.datetime.now() > dt:
+                msg.reply(_('Date/Datetime must be greater than now.'))
+                continue
+            return dt

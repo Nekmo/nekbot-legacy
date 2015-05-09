@@ -44,3 +44,7 @@ def limit_context(key, text, chars_context=10, limiter='[...]'):
 
 def highlight_occurrence(text, occurrence, char='*'):
     return re.sub('(%s)' % re.escape(occurrence), r'{char}\1{char}'.format(char=char), text)
+
+
+def in_str_no_case(term, text):
+    return bool(re.findall(re.escape(term), text, re.IGNORECASE))
