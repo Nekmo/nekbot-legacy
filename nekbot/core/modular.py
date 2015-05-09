@@ -1,6 +1,7 @@
 # coding=utf-8
 from logging import getLogger
 import threading
+import traceback
 from nekbot.utils.modules import get_module, get_main_class
 
 __author__ = 'nekmo'
@@ -33,7 +34,12 @@ class Modular(object):
 
     def start(self, module_name):
         # Obtengo el módulo por el module_name
-        module = self.get_module(self.module_path % module_name)
+        try:
+            module = self.get_module(self.module_path % module_name)
+        except ImportError:
+            logger.error('Unable to start: %s' % module_name)
+            print traceback.format_exc()
+            return
         self.modules[module_name] = module
         instance = None
         try:
