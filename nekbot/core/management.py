@@ -1,23 +1,15 @@
 import os
 import logging
 import sys
-import shutil
+
+from nekbot.utils.filesystem import copytree
+
 
 __author__ = 'nekmo'
 __dir__ = os.path.abspath(os.path.dirname(__file__))
 
 nekbot_src_dir = os.path.dirname(os.path.dirname(__file__))
 conf_src_dir = os.path.join(nekbot_src_dir, 'conf')
-
-
-def copytree(src, dst, symlinks=False, ignore=None):
-    for item in os.listdir(src):
-        s = os.path.join(src, item)
-        d = os.path.join(dst, item)
-        if os.path.isdir(s):
-            shutil.copytree(s, d, symlinks, ignore)
-        else:
-            shutil.copy2(s, d)
 
 
 class Management(object):
@@ -51,6 +43,11 @@ class Management(object):
         parser_createbot.set_defaults(which='createbot')
         parser_createbot.add_argument('name')
         parser_createbot.add_argument('dest', nargs='?', default=None)
+        # Subcommand Create plugin
+        parser_createplugin = parser.sub.add_parser('createplugin', help='Create a new plugin for distribute.')
+        parser_createplugin.set_defaults(which='createplugin')
+        parser_createplugin.add_argument('name')
+        parser_createplugin.add_argument('dest', nargs='?', default=None)
         # Subcommand start
         parser_start = parser.sub.add_parser('start', help='Start bot.')
         parser_start.set_defaults(which='start')
@@ -83,6 +80,9 @@ class Management(object):
         except Exception as e:
             sys.stderr.write('Unknown error: %s\n' % e)
         print('Project created as %s' % dest)
+
+    def command_createplugin(self, args):
+        pass
 
     def command_start(self, args):
         from nekbot import NekBot

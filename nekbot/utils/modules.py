@@ -7,7 +7,10 @@ def get_module(path):
     except ImportError:
         # Puede ser un método  o propiedad
         module = '.'.join(path.split('.')[:-1])
-        module = __import__(module, globals(), locals(), [module.split('.')[-1]])
+        try:
+            module = __import__(module, globals(), locals(), [module.split('.')[-1]])
+        except (AttributeError, ImportError):
+            raise ImportError
         return getattr(module, path.split('.')[-1])
 
 def get_main_class(module, name):

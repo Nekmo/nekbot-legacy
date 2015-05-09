@@ -48,3 +48,9 @@ def highlight_occurrence(text, occurrence, char='*'):
 
 def in_str_no_case(term, text):
     return bool(re.findall(re.escape(term), text, re.IGNORECASE))
+
+
+def replaces(text, **kwargs):
+    for key, value in kwargs.items():
+        text = text.replace(key, value)
+    return text
