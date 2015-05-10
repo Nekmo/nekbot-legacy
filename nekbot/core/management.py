@@ -3,6 +3,7 @@ import logging
 import sys
 
 from nekbot.utils.filesystem import copytree, copy_template
+from nekbot.utils.system import execute_hook
 
 
 __author__ = 'nekmo'
@@ -86,17 +87,21 @@ class Management(object):
         name = os.path.split(dest)[1]
         replace = {
             'plugin_template': name,
-            'author_name': settings.PLUGIN_AUTHOR_NAME,
-            'author_email': settings.PLUGIN_AUTHOR_EMAIL,
-            'author_website': settings.PLUGIN_AUTHOR_WEBSITE,
+            'plugin_author_name': settings.PLUGIN_AUTHOR_NAME,
+            'plugin_author_email': settings.PLUGIN_AUTHOR_EMAIL,
+            'plugin_author_website': settings.PLUGIN_AUTHOR_WEBSITE,
         }
         if os.path.exists(dest):
             sys.stderr.write("Sorry, directory %s exists. I can't create directory.\n" % dest)
             exit(1)
         else:
             os.mkdir(dest)
+        if settings.HOOK_BEFORE_CREATE_PLUGIN:
+            execute_hook(settings.HOOK_BEFORE_CREATE_PLUGIN, dest, name, settings)
         copy_template(os.path.join(conf_src_dir, 'plugin_template'), dest, replace)
         print('Plugin created as %s in %s' % (name, dest))
+        if settings.HOOK_AFTER_CREATE_PLUGIN:
+            execute_hook(settings.HOOK_AFTER_CREATE_PLUGIN, dest, name, settings)
 
     def command_start(self, args):
         from nekbot import NekBot

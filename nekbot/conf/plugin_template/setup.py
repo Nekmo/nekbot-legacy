@@ -1,4 +1,4 @@
-# stevedore/example/setup.py
+# coding=utf-8
 from distutils.util import convert_path
 import os
 from fnmatch import fnmatchcase
@@ -7,11 +7,11 @@ from pip.req import parse_requirements
 import uuid
 import sys
 
-AUTHOR = 'author_name'
-EMAIL = 'author_email'
+AUTHOR = 'plugin_author_name'
+EMAIL = 'plugin_author_email'
 PLUGIN_NAME = 'plugin_template'
 DESCRIPTION = ''
-WEBSITE = 'author_website'
+WEBSITE = 'plugin_author_website'
 DOWNLOAD_URL = ''
 STATUS_LEVEL = 1  # 1:Planning 2:Pre-Alpha 3:Alpha 4:Beta 5:Production/Stable 6:Mature 7:Inactive
 

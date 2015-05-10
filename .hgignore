@@ -10,6 +10,7 @@ dist
 *.egg-info
 nekbot/protocols/irc/**
 nekbot/protocols/irc
+workflow.py
 
 # switch to regexp syntax.
 syntax: regexp
@@ -23,3 +24,4 @@ nekbot/plugins/random
 doc.txt
 nekbot/plugins/meetings
 storage
+nekbot/plugins/geo

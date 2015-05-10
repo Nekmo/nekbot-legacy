@@ -1,1 +1,1 @@
-author_name
+plugin_author_name

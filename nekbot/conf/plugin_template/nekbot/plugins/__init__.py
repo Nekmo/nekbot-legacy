@@ -2,4 +2,4 @@
 """
 __import__('pkg_resources').declare_namespace(__name__)
 
-__author__ = 'author_name'
+__author__ = 'plugin_author_name'

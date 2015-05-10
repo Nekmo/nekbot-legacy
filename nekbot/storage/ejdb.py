@@ -12,4 +12,4 @@ def ejdb(plugin, collection='global'):
         os.makedirs(os.path.dirname(path))
     except:
         pass
-    return pyejdb.EJDB(path, pyejdb.DEFAULT_OPEN_MODE | pyejdb.JBOTRUNC)
+    return pyejdb.EJDB(path)

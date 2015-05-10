@@ -67,6 +67,7 @@ include nekbot/utils/iter.py
 include nekbot/utils/modules.py
 include nekbot/utils/strings.py
 include nekbot/utils/survey.py
+include nekbot/utils/system.py
 include nekbot/utils/threads.py
 include nekbot/utils/timeutils.py
 include requirements.txt
