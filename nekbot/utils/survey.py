@@ -27,7 +27,7 @@ class InspectFunction(object):
             append_or_update(self.kwarg_types, map(self.get_type, kwargs_types), False)
         # añado el argumento si no hay para la posición, pero si no no lo modifico
         # Le quito 1 porque el primer argumento es "msg", el objeto Msg
-        arg_types = arg_types[:-len(kwargs_types if kwargs_types else [])]
+        arg_types = arg_types if not kwargs_types else arg_types[:-len(kwargs_types)]
         append_or_update(self.arg_types, [str] * (len(arg_types) - 1), False)
 
     def get_type(self, value):

@@ -90,6 +90,7 @@ class ArgParse(InspectFunction):
         final_kwargs = {}
         all_types = list(self.arg_types) + list(self.kwarg_types)  # Todos los tipos conocidos
         i = 0  # Argumento posicional
+        abound = 0
         while True:
             if not args:
                 break
@@ -109,7 +110,8 @@ class ArgParse(InspectFunction):
             if all_types:
                 type_now = all_types.pop(0)  # Tomo el tipo que me toca ahora
             else:
-                type_now = str  # No hay más tipos disponibles. Uso str por defecto
+                type_now = str
+                abound += 1
             if inspect.isclass(type_now) and issubclass(type_now, ArgParseType):
                 # Es la clase sin instanciar de ArgParseType. Se instancia
                 type_now = type_now()
@@ -125,4 +127,7 @@ class ArgParse(InspectFunction):
         final_args += self.kwarg_values[-(len(self.arg_types) + len(self.kwarg_values) - len(final_args)):]
         for position, value in final_kwargs.items():
             final_args[position] = value
+        if abound:
+            raise PrintableException('Too many arguments for this command. Please, remove %i argument%s.' %
+                                     (abound, 's' if abound > 1 else ''))
         return final_args
