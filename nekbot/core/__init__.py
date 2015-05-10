@@ -16,6 +16,7 @@ logger = getLogger('nekbot')
 
 class NekBot(object):
     version = __version__
+    _quit = False
 
     def __init__(self):
         self.protocols = Protocols(self, settings.PROTOCOLS)
@@ -43,7 +44,12 @@ class NekBot(object):
         logger.info('Everything has started')
         while True: sleep(0.2)
 
+    @property
+    def is_quit(self):
+        return self._quit
+
     def close(self):
+        self._quit = True
         logger.info('Closing...')
         logger.debug('Closing plugins...')
         self.close_plugins()
