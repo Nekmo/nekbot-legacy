@@ -1,3 +1,7 @@
+PLUGIN_AUTHOR_NAME = 'Your name'
+PLUGIN_AUTHOR_EMAIL = 'your@email'
+PLUGIN_AUTHOR_WEBSITE = 'https://yourwebsite'
+
 STORAGE_DIR = 'storage'
 
 PERMISSIONS_TREE = {

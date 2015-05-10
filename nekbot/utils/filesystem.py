@@ -1,7 +1,7 @@
 import os
 import shutil
 import re
-from nekbot.utils.strings import replaces
+from nekbot.utils.strings import replaces, multiple_search
 
 __author__ = 'nekmo'
 
@@ -38,7 +38,7 @@ def all_nodes(directory, file_handler=None, dir_handler=None, file_result=False,
                 if file_result:
                     results[filepath] = result
         if dir_handler is not None:
-            for name in files:
+            for name in dirs:
                 dirpath = os.path.join(root, name)
                 result = dir_handler(dirpath)
                 if dir_result:
@@ -64,7 +64,10 @@ def copy_template(src, dst, to_replace=None):
         to_replace = {}
 
     def rename_directory(directory):
-        rename(directory, replaces(os.path.split(directory)[1], **to_replace))
+        filename = os.path.split(directory)[1]
+        if not multiple_search(to_replace.keys(), filename):
+            return
+        rename(directory, replaces(filename, **to_replace))
         raise RestartRename
     copytree(src, dst)
     all_files(dst, lambda x: replace_inside_file(x, **to_replace))

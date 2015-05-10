@@ -33,6 +33,10 @@ def find_occurrences(key, text):
     return map(lambda x: x.start(), re.finditer(re.escape(key), text))
 
 
+def multiple_search(keys, text, *args):
+    return re.findall('(%s)' % '|'.join(map(re.escape, keys)), text, *args)
+
+
 def limit_context(key, text, chars_context=10, limiter='[...]'):
     results = []
     for occurrence in find_occurrences(key, text):

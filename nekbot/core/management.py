@@ -2,7 +2,7 @@ import os
 import logging
 import sys
 
-from nekbot.utils.filesystem import copytree
+from nekbot.utils.filesystem import copytree, copy_template
 
 
 __author__ = 'nekmo'
@@ -46,8 +46,7 @@ class Management(object):
         # Subcommand Create plugin
         parser_createplugin = parser.sub.add_parser('createplugin', help='Create a new plugin for distribute.')
         parser_createplugin.set_defaults(which='createplugin')
-        parser_createplugin.add_argument('name')
-        parser_createplugin.add_argument('dest', nargs='?', default=None)
+        parser_createplugin.add_argument('dest')
         # Subcommand start
         parser_start = parser.sub.add_parser('start', help='Start bot.')
         parser_start.set_defaults(which='start')
@@ -82,7 +81,22 @@ class Management(object):
         print('Project created as %s' % dest)
 
     def command_createplugin(self, args):
-        pass
+        from nekbot.conf import settings
+        dest = args.dest
+        name = os.path.split(dest)[1]
+        replace = {
+            'plugin_template': name,
+            'author_name': settings.PLUGIN_AUTHOR_NAME,
+            'author_email': settings.PLUGIN_AUTHOR_EMAIL,
+            'author_website': settings.PLUGIN_AUTHOR_WEBSITE,
+        }
+        if os.path.exists(dest):
+            sys.stderr.write("Sorry, directory %s exists. I can't create directory.\n" % dest)
+            exit(1)
+        else:
+            os.mkdir(dest)
+        copy_template(os.path.join(conf_src_dir, 'plugin_template'), dest, replace)
+        print('Plugin created as %s in %s' % (name, dest))
 
     def command_start(self, args):
         from nekbot import NekBot
