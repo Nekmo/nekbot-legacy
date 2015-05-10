@@ -56,7 +56,7 @@ class ArgParse(InspectFunction):
         """
         argspec = inspect.getargspec(function)
         if not argspec.defaults:
-            return # No hay kwargs
+            return  # No hay kwargs
         kwarg_names = argspec.args[-len(argspec.defaults):]
         self.kwarg_values = argspec.defaults
         for key, arg_type in kwargs.items():
@@ -111,7 +111,8 @@ class ArgParse(InspectFunction):
                 type_now = all_types.pop(0)  # Tomo el tipo que me toca ahora
             else:
                 type_now = str
-                abound += 1
+                if not self.vargs:
+                    abound += 1
             if inspect.isclass(type_now) and issubclass(type_now, ArgParseType):
                 # Es la clase sin instanciar de ArgParseType. Se instancia
                 type_now = type_now()

@@ -10,6 +10,9 @@ def kwargs_function(function):
 
 
 class InspectFunction(object):
+    vargs = None
+    keywords = None
+
     def __init__(self):
         self.arg_types = []
         self.kwarg_types = []
@@ -22,6 +25,8 @@ class InspectFunction(object):
     
     def set_from_function(self, function):
         argspec = getargspec(function)
+        self.vargs = argspec.varargs
+        self.keywords = argspec.keywords
         arg_types, kwargs_types = argspec.args, argspec.defaults
         if kwargs_types:
             append_or_update(self.kwarg_types, map(self.get_type, kwargs_types), False)
