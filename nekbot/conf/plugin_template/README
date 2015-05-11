@@ -2,11 +2,15 @@ NekBot plugin_template
 ######################
 plugin_template plugin. Nekbot, a modular and multiprotocol bot written in Python.
 
-Usage:
+Usage::
+
+    ...
+
+Example::
+
+    ...
 
 
-
-
-Please! You need NekBot for use this plugin. This plugin not works without NekBot.
+You need NekBot to use this plugin. This plugin does not work without NekBot.
 
 https://bitbucket.org/Nekmo/nekbot-mirai/

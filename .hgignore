@@ -25,3 +25,5 @@ doc.txt
 nekbot/plugins/meetings
 storage
 nekbot/plugins/geo
+nekbot/plugins/weather
+nekbot/plugins/userscommands

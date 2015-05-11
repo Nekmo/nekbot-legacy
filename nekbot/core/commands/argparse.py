@@ -125,7 +125,9 @@ class ArgParse(InspectFunction):
         # En el final args, pondré también los valores por defecto de los kwargs, para poder
         # sobrescribirlos con los valores que pudiesen haberse establecido por Special types,
         # en la posición que necesitan
-        final_args += self.kwarg_values[-(len(self.arg_types) + len(self.kwarg_values) - len(final_args)):]
+        kwargs_count = len(self.arg_types) + len(self.kwarg_values) - len(final_args)
+        if kwargs_count:
+            final_args += self.kwarg_values[-kwargs_count:]
         for position, value in final_kwargs.items():
             final_args[position] = value
         if abound:
