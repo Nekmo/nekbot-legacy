@@ -15,6 +15,9 @@ Desarrolladores
    :maxdepth: 2
 
    plugin_devs/first_steps
+   plugin_devs/dev_commands
+   plugin_devs/dev_plugins
+   plugin_devs/arguments
 
 Indices y tablas
 ================
