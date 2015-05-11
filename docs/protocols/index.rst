@@ -57,4 +57,3 @@ Protocolos
 3. En Jabber, el histórico sólo es recuperable, por lo general, un limitado número de líneas antes de la llegada. Esto se solucionaría con el XEP-0313, el cual todavía es experimental.
 4. Algunos servidores cuentan con un servicio para buscar en los usuarios del servidor, pero no un listado completo de los mismos (por privacidad).
 5. No cuenta con broadcast, pero sí con lista de amigos, por lo que se puede envuar a cada uno de ellos individualmente.
-6. 

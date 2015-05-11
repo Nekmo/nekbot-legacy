@@ -14,7 +14,7 @@ Desarrolladores
 .. toctree::
    :maxdepth: 2
 
-   first_steps
+   plugin_devs/first_steps
 
 Indices y tablas
 ================

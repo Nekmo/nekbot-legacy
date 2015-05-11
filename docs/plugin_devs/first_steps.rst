@@ -7,10 +7,6 @@ Mi primer plugin
 ¡Crear un plugin es fácil, rápido, y para toda la familia! En serio, es tan fácil que te sentirás insultado. Procura
 no ofenderte mucho.
 
-.. WARNING::
-    En un estado posterior del proyecto, habrá un sistema de creación de proyectos, estando el código fuente de
-    NekBot y el entorno de trabajo del usuario separados. Este manual está escrito con ello en cuenta.
-
 1. Primero, crea un archivo de plugin en el directorio "plugins" de tu proyecto. Por ejemplo, "hello.py".
 2. Pon lo siguiente en el archivo::
 
@@ -97,8 +93,10 @@ una clase Message específica del protocolo por el cual entró el mensaje). Algu
 
     * **message.body:** el mensaje original del usuario que provocó la ejecución del mensaje.
     * **message.user:** clase que hereda User, con propiedades como username o id.
-    * **message.groupchat:** clase que hereda de GroupChat. # TODO
+    * **message.groupchat:** clase que hereda de GroupChat, con información de la sala y sus usuarios.
 
 Algunos ejemplos de métodos son:
 
     * **message.reply(<message string>)**: Mensaje a enviar a la misma conversación que provocó el comando.
+    * **message.user.send_message(<message string>)**: Enviar mensaje al usuario por un medio privado.
+    * **message.groupchat.send_message(<message string>)**: Enviar mensaje a la sala, donde todos pueden verlo.
