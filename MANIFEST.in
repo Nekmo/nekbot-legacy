@@ -5,9 +5,12 @@ include VERSION
 include contributors.txt
 include docs/Makefile
 include docs/conf.py
-include docs/first_steps.rst
 include docs/index.rst
 include docs/make.bat
+include docs/plugin_devs/arguments.rst
+include docs/plugin_devs/dev_commands.rst
+include docs/plugin_devs/dev_plugins.rst
+include docs/plugin_devs/first_steps.rst
 include docs/protocols/index.rst
 include nekbot/__init__.py
 include nekbot/conf/__init__.py
@@ -53,6 +56,7 @@ include nekbot/protocols/base/__init__.py
 include nekbot/protocols/base/event.py
 include nekbot/protocols/base/group_chat.py
 include nekbot/protocols/base/message.py
+include nekbot/protocols/base/send.py
 include nekbot/protocols/base/user.py
 include nekbot/storage/__init__.py
 include nekbot/storage/ejdb.py

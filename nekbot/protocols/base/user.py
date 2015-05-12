@@ -1,24 +1,21 @@
 # coding=utf-8
+from nekbot.protocols.base.send import Send
 from nekbot.utils.strings import long_message
 
 __author__ = 'nekmo'
 
-class User(object):
+
+class User(Send):
 
     def __init__(self, protocol, username, id=None, groupchat=None):
         self.protocol, self.username, self.groupchat = protocol, username, groupchat
         if not hasattr(self, 'id') and id is not None:
             # id puede ser un método. No queremos entonces sobrescribirlo.
             self.id = id
+        self.init()
 
-    def send_message(self, body, notice=False):
-        raise NotImplementedError("This protocol can't send messages to users.")
-
-    def send_warning(self, body):
-        self.send_message('Warning: %s' % body, not long_message(body))
-
-    def send_error(self, body):
-        self.send_message('Error: %s' % body, not long_message(body))
+    def init(self):
+        pass
 
     def get_id(self):
         return self.id
