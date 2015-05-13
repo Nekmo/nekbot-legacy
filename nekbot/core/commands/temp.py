@@ -160,9 +160,14 @@ class DatetimeOrDate(TempRegex):
     REGEX_PATTERN = '(\d{2}/\d{2}/\d{4})( \d{2}\:\d{2}|)'
     DATETIME_PATTERN = '%d/%m/%Y %H:%M'
     DATE_PATTERN = '%d/%m/%Y'
+
     def __init__(self, protocol, user=None, timeout=300, no_raise=False, from_now=False):
         self.from_now = from_now
         super(DatetimeOrDate, self).__init__(protocol, self.REGEX_PATTERN, user, timeout, no_raise)
+
+    def invalid(self, msg):
+        msg.reply(_('Date or datetime is invalid. Please, provide a valid value.'))
+        return True
 
     def read(self):
         for msg in super(DatetimeOrDate, self).read():
@@ -170,8 +175,10 @@ class DatetimeOrDate(TempRegex):
             try:
                 dt = datetime.datetime.strptime(msg.body, pattern)
             except ValueError:
-                msg.reply(_('Date or datetime is invalid. Please, provide a valid value.'))
-                continue
+                if self.invalid(msg) is False:
+                    return msg
+                else:
+                    continue
             if self.from_now and datetime.datetime.now() > dt:
                 msg.reply(_('Date/Datetime must be greater than now.'))
                 continue

@@ -16,13 +16,19 @@ class Send(object):
     def send_error(self, body):
         self.send_method('Error: %s' % body, not long_message(body))
 
-    send_method = send_message
+    @property
+    def send_method(self):
+        return self.send_message
 
 
 class MessageSend(object):
     def reply(self, body, notice=False):
         raise NotImplementedError("This protocol can't reply messages.")
 
-    send_method = reply
+    @property
+    def send_method(self):
+        return self.reply
+
+    short_reply = Send.short_message
     reply_warning = Send.send_warning
-    reply_error= Send.send_error
+    reply_error = Send.send_error

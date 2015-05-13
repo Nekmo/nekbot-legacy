@@ -21,9 +21,9 @@ class Plugins(Modular):
         del proyecto. Si no funciona, cargarlo desde NekBot.
         """
         try:
-            return get_module(module_path)
+            return get_module(module_path, True)
         except ImportError:
-            return get_module('nekbot.' + module_path)
+            return get_module('nekbot.' + module_path, True)
 
     def start(self, protocol):
         logger.info('Loading %s plugin', protocol)

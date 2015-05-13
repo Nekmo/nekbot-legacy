@@ -1,17 +1,32 @@
 # coding=utf-8
+import traceback
+import imp
+
 __author__ = 'nekmo'
 
-def get_module(path):
+
+
+
+def get_module(path, print_traceback=False):
+    missing_module = True
     try:
         return __import__(path, globals(), locals(), [path.split('.')[-1]])
-    except ImportError:
+    except ImportError as e:
+        if print_traceback and e.message != 'No module named %s' % path:
+            missing_module = False
+            print traceback.format_exc()
         # Puede ser un método  o propiedad
         module = '.'.join(path.split('.')[:-1])
         module = __import__(module, globals(), locals(), [module.split('.')[-1]])
         try:
             return getattr(module, path.split('.')[-1])
-        except AttributeError:
-            raise ImportError
+        except AttributeError as e:
+            if print_traceback and e.message != "'module' object has no attribute '%s'" % path.split('.')[-1]:
+                missing_module = False
+                print traceback.format_exc()
+    exception = ImportError('Missing module' if missing_module else 'Programming error')
+    exception.missing_module = missing_module
+    return exception
 
 def get_main_class(module, name):
     if hasattr(module, name.capitalize()):

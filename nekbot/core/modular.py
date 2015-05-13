@@ -30,7 +30,7 @@ class Modular(object):
             raise self.ModularError('Please, provide a module_path for %s' % self.__class__)
 
     def get_module(self, module_path):
-        return get_module(module_path)
+        return get_module(module_path, True)
 
     def start(self, module_name):
         # Obtengo el módulo por el module_name
@@ -38,7 +38,6 @@ class Modular(object):
             module = self.get_module(self.module_path % module_name)
         except ImportError:
             logger.error('Unable to start: %s' % module_name)
-            print traceback.format_exc()
             return
         self.modules[module_name] = module
         instance = None

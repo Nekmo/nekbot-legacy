@@ -1,6 +1,5 @@
 # coding=utf-8
 from nekbot.protocols.base.send import Send
-from nekbot.utils.strings import long_message
 
 __author__ = 'nekmo'
 
@@ -28,6 +27,7 @@ class User(Send):
 
     def __eq__(self, other):
         return self.id == other.id
+
 
 class Users(dict):
     def __init__(self, protocol):

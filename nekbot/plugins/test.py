@@ -91,4 +91,4 @@ def breakline(msg):
 
 @command
 def get_users(msg):
-    msg.groupchat.get_users()
+    return msg.groupchat.get_users()

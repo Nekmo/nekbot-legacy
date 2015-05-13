@@ -9,6 +9,10 @@ class GroupChat(Send):
         self.users = Users(protocol)
         self.protocol, self.name, self.id = protocol, name, groupchat_id
         self.init()
+        try:
+            self.get_users()
+        except NotImplementedError:
+            pass
 
     def init(self):
         pass

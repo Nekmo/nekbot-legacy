@@ -64,5 +64,8 @@ class InvalidArgument(PrintableException):
 class InsufficientPermissions(PrintableException):
     base_msg = 'This action could not be completed due to lack of permissions'
 
+class InvalidSource(PrintableException):
+    base_msg = 'This action could not be completed due to lack of permissions'
+
 class SecurityError(InvalidArgument):
     base_msg = 'Security Error'

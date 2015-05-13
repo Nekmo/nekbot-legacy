@@ -27,3 +27,4 @@ storage
 nekbot/plugins/geo
 nekbot/plugins/weather
 nekbot/plugins/userscommands
+nekbot/plugins/polls
