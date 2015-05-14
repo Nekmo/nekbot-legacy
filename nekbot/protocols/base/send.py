@@ -29,6 +29,6 @@ class MessageSend(object):
     def send_method(self):
         return self.reply
 
-    short_reply = Send.short_message
-    reply_warning = Send.send_warning
-    reply_error = Send.send_error
+    short_reply = Send.short_message.__func__
+    reply_warning = Send.send_warning.__func__
+    reply_error = Send.send_error.__func__

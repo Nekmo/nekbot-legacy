@@ -156,6 +156,16 @@ class Bool(TempRegex):
             else:
                 raise NotImplementedError
 
+
+class Int(FirstPattern):
+    def __init__(self, protocol, user=None, timeout=300, no_raise=False):
+        super(Int, self).__init__(protocol, '(\d+)', user, timeout, no_raise)
+
+    def read(self):
+        value = super(Int, self).read()
+        return int(value)
+
+
 class DatetimeOrDate(TempRegex):
     REGEX_PATTERN = '(\d{2}/\d{2}/\d{4})( \d{2}\:\d{2}|)'
     DATETIME_PATTERN = '%d/%m/%Y %H:%M'
