@@ -5,10 +5,11 @@ __author__ = 'nekmo'
 
 
 class GroupChat(Send):
-    def __init__(self, protocol, name, groupchat_id=None):
+    def __init__(self, protocol, name, group_chat_id=None):
         self.users = Users(protocol)
-        self.protocol, self.name, self.id = protocol, name, groupchat_id
+        self.protocol, self.name, self.id = protocol, name, group_chat_id
         self.init()
+        self.protocol.groupchats[str(self)] = self
         try:
             self.get_users()
         except NotImplementedError:
@@ -34,3 +35,10 @@ class GroupChats(dict):
     def __init__(self, protocol):
         self.protocol = protocol
         super(GroupChats, self).__init__()
+
+    def get_or_create(self, group_chat_id, name):
+        if isinstance(group_chat_id, int):
+            group_chat_id = str(group_chat_id)
+        if group_chat_id not in self:
+            GroupChat(self.protocol, name, group_chat_id)
+        return self[group_chat_id]

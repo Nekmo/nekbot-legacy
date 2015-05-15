@@ -20,7 +20,7 @@ class User(Send):
         return self.id
 
     def __repr__(self):
-        return '<%s %s id:%s>' % (self.__class__, self.username, self.id)
+        return '<%s %s id:%s>' % (self.__class__.__name__, self.username, self.id)
 
     def __str__(self):
         return self.username
@@ -33,3 +33,4 @@ class Users(dict):
     def __init__(self, protocol):
         self.protocol = protocol
         dict.__init__(self)
+

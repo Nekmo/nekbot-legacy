@@ -38,7 +38,13 @@ class Message(Event, MessageSend):
     def get_group_chat_id(self):
         raise NotImplementedError("This protocol doesn't support get_group_chat_id.")
 
+    def create_group_chat(self):
+        raise NotImplementedError("This protocol can not create the object GroupChat from the message room.")
+
     def get_group_chat(self):
+        groupchat_id = self.get_group_chat_id()
+        if groupchat_id not in self.protocol.groupchats:
+            self.create_group_chat()
         return self.protocol.groupchats[self.get_group_chat_id()]
 
     @property
@@ -46,7 +52,7 @@ class Message(Event, MessageSend):
         if not self._groupchat and self.is_groupchat:
             groupchat_id = self.get_group_chat_id()
             if groupchat_id not in self.protocol.groupchats:
-                self.protocol.groupchats[groupchat_id] = self.get_group_chat()
+                self.get_group_chat()
             self._groupchat = self.protocol.groupchats[groupchat_id]
         return self._groupchat
 
