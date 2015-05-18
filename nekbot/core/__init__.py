@@ -42,7 +42,8 @@ class NekBot(object):
 
     def loop(self):
         logger.info('Everything has started')
-        while True: sleep(0.2)
+        while True:
+            sleep(0.2)
 
     @property
     def is_quit(self):

@@ -1,5 +1,6 @@
 # coding=utf-8
 from types import IntType
+import time
 from nekbot.core.commands import command
 from nekbot.core.commands.control import control
 from nekbot.core.commands.temp import TempRegex
@@ -91,4 +92,10 @@ def breakline(msg):
 
 @command
 def get_users(msg):
-    return msg.groupchat.get_users()
+    msg.groupchat.get_users()
+    return msg.groupchat.users
+
+@command
+def direct_msg(msg):
+    id = msg.user.get_id()
+    msg.protocol.send_message(id, 'Foo')

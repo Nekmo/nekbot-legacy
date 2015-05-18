@@ -39,7 +39,8 @@ class ArgParse(InspectFunction):
                 raise e
             err_class = e.__class__
             # No es un tipo de excepción conocida.
-            if not ERRORS.get(err_class): raise e
+            if not ERRORS.get(err_class):
+                raise e
             # Es conocida, pero no tenemos tipo para el mismo, y no hay por defecto
             if not ERRORS[err_class].get(type) and not ERRORS[err_class].get(AllTypes):
                 raise e
@@ -110,7 +111,7 @@ class ArgParse(InspectFunction):
             if all_types:
                 type_now = all_types.pop(0)  # Tomo el tipo que me toca ahora
             else:
-                type_now = str
+                type_now = lambda x: x
                 if not self.vargs:
                     abound += 1
             if inspect.isclass(type_now) and issubclass(type_now, ArgParseType):

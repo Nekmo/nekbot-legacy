@@ -34,3 +34,8 @@ class Users(dict):
         self.protocol = protocol
         dict.__init__(self)
 
+    def values(self, value=None):
+        values = dict.values(self)
+        if value is None:
+            return values
+        return [getattr(user, value) for user in values]

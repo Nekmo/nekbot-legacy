@@ -12,7 +12,8 @@ def get_module(path, print_traceback=False):
     try:
         return __import__(path, globals(), locals(), [path.split('.')[-1]])
     except ImportError as e:
-        if print_traceback and e.message != 'No module named %s' % path:
+        if print_traceback and e.message not in ['No module named %s' % path.split('.')[-1],
+                                                 'No module named %s' % path]:
             missing_module = False
             print traceback.format_exc()
         # Puede ser un método  o propiedad
@@ -26,7 +27,7 @@ def get_module(path, print_traceback=False):
                 print traceback.format_exc()
     exception = ImportError('Missing module' if missing_module else 'Programming error')
     exception.missing_module = missing_module
-    return exception
+    raise exception
 
 def get_main_class(module, name):
     if hasattr(module, name.capitalize()):

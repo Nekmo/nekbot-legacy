@@ -1,15 +1,25 @@
 # coding=utf-8
-import shlex
+import sys
+try:
+    import ushlex as shlex
+except ImportError:
+    if sys.version_info.major < 3:
+        import warnings
+        warnings.warn("Ushlex is not installed. Shlex not support Unicode!", ImportWarning)
+    import shlex
+
 import re
 from nekbot.utils.ints import get_int
 
 __author__ = 'nekmo'
 
 
-
 def long_message(message, newlines=1, length=140):
     if not isinstance(message, (str, unicode)):
-        message = str(message)
+        try:
+            message = str(message)
+        except (UnicodeDecodeError, UnicodeEncodeError):
+            message = unicode(message)
     if len(message) > length:
         return True
     if len(message.split('\n')) - 1 > newlines:

@@ -3,6 +3,7 @@ from logging import getLogger
 import threading
 import traceback
 from nekbot.utils.modules import get_module, get_main_class
+from nekbot.utils.threads import timelimit, TimeLimitExpired
 
 __author__ = 'nekmo'
 
@@ -17,6 +18,7 @@ class Modular(object):
     principal", con el mismo nombre del módulo, pero con camelcase, y se instanciará en
     self.instances.
     """
+    timeout = 5
     ModularError = Exception
     module_path = None
     fail_on_not_instance = True
@@ -67,4 +69,7 @@ class Modular(object):
 
     def start_all(self):
         for module_name in self.modules_names:
-            self.start(module_name)
+            l = threading.Thread(target=self.start, args=(module_name,))
+            l.daemon = True
+            l.start()
+            # self.start(module_name)

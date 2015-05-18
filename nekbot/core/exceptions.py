@@ -1,4 +1,5 @@
 # coding=utf-8
+from __future__ import unicode_literals
 from nekbot.utils.human import human_join
 
 __author__ = 'nekmo'
@@ -41,7 +42,7 @@ class InvalidArgument(PrintableException):
                 arg += ' (posición %s)' % (positions[i] + 1)
             args.append(arg)
         body += human_join(args, 'y')
-        body += ' no son válidos.'
+        body += u' no son válidos.'
         return body
 
     def give_info(self, value, pos):
