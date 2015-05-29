@@ -69,7 +69,7 @@ class Command(object):
         try:
             response = self.function(msg, *args)
         except PrintableException as e:
-            response = str(e)
+            response = unicode(e)
         except Exception:
             logger.error(traceback.format_exc())
             msg.user.send_warning('El comando %s no finalizó correctamente.' % repr(self))
@@ -79,7 +79,7 @@ class Command(object):
 
     def control(self, msg):
         if hasattr(self.function, 'control'):
-             return self.function.control.check(msg)
+            return self.function.control.check(msg)
         if hasattr(self.function, 'command_decorator') and \
                 hasattr(self.function.command_decorator, 'control'):
             return self.function.command_decorator.control.check(msg)
